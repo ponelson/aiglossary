@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>An interactive glossary of AI</title>
+<style>
+  :root {
+    --bg: #faf9f5;
+    --surface: #ffffff;
+    --surface-2: #f3f1ea;
+    --border: rgba(20,20,20,0.10);
+    --border-strong: rgba(20,20,20,0.22);
+    --text: #1a1a1a;
+    --text-secondary: #555049;
+    --text-tertiary: #8a857c;
+    --accent: #c96442;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1816;
+      --surface: #242220;
+      --surface-2: #2e2c29;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.22);
+      --text: #f5f4ee;
+      --text-secondary: #b8b3a8;
+      --text-tertiary: #807a6e;
+      --accent: #e08260;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+  header { margin-bottom: 2rem; }
+  h1 { font-size: 28px; font-weight: 500; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+  .sub { font-size: 14px; color: var(--text-secondary); margin: 0; }
+  .controls { margin: 1.75rem 0 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+  .search { width: 100%; padding: 10px 14px; font-size: 14px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); font-family: inherit; }
+  .search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(201,100,66,0.12); }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pill { padding: 6px 13px; border-radius: 999px; font-size: 12.5px; border: 0.5px solid var(--border); background: transparent; cursor: pointer; color: var(--text-secondary); font-family: inherit; transition: all 0.15s; }
+  .pill:hover { border-color: var(--border-strong); color: var(--text); }
+  .pill.on { background: var(--surface-2); color: var(--text); border-color: var(--border-strong); }
+  .count { margin-left: auto; font-size: 11px; color: var(--text-tertiary); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; cursor: pointer; text-align: left; font-family: inherit; transition: all 0.15s; display: block; width: 100%; color: var(--text); }
+  .card:hover { border-color: var(--border-strong); background: var(--surface-2); transform: translateY(-1px); }
+  .card.open { border-color: var(--accent); background: var(--surface-2); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+  .card-name { font-size: 14px; font-weight: 500; }
+  .card-cat { font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; }
+  .card-desc { font-size: 12.5px; line-height: 1.5; color: var(--text-secondary); }
+  .card-detail { display: none; font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); margin-top: 10px; padding-top: 10px; border-top: 0.5px solid var(--border); }
+  .card.open .card-detail { display: block; }
+  .empty { grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-tertiary); font-size: 14px; }
+  footer { margin-top: 3rem; font-size: 12px; color: var(--text-tertiary); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>An interactive glossary of AI</h1>
+    <p class="sub">Tap any card to expand it. Search or filter to narrow down.</p>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search terms or descriptions..." class="search" />
+    <div class="filters" id="filters">
+      <button class="pill on" data-f="all">All</button>
+      <button class="pill" data-f="foundations">Foundations</button>
+      <button class="pill" data-f="architectures">Architectures</button>
+      <button class="pill" data-f="training">Training</button>
+      <button class="pill" data-f="inference">Inference</button>
+      <button class="pill" data-f="agents">Agents</button>
+      <button class="pill" data-f="meta">Big picture</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>An opinionated tour — not exhaustive, but covers most of what you'd hear in any AI conversation in 2026.</footer>
+</div>
+
+<script>
+const TERMS = [
+  // Foundations
+  { n: 'Machine learning', c: 'foundations', d: 'Systems that learn patterns from data instead of being explicitly programmed.', long: 'Instead of writing rules like "if email contains the word lottery, mark as spam," you show a model thousands of examples and let it discover patterns itself. Almost all modern AI is some flavor of machine learning. The trade-off: you give up explicit understanding of what the system is doing in exchange for handling problems too messy to spell out by hand.' },
+  { n: 'Neural network', c: 'foundations', d: 'Layered web of weighted connections, loosely modeled on biological neurons.', long: 'A stack of matrix multiplications interleaved with non-linear functions. Each "neuron" takes a weighted sum of inputs and decides what to pass along. Training adjusts those weights. The biology analogy is more marketing than mechanism — real neurons are much messier — but the layered structure does enable hierarchical feature learning.' },
+  { n: 'Backpropagation', c: 'foundations', d: 'Updates weights by sending error signals backward through the layers.', long: 'You make a prediction, measure how wrong it was, then use the chain rule of calculus to figure out how each weight in the network contributed to that error. Each weight gets a small nudge in the direction that would have reduced the error. Do this billions of times across billions of examples. Invented in the 60s, made famous in the 80s, weaponized in the 2010s.' },
+  { n: 'Gradient descent', c: 'foundations', d: 'Nudges parameters in the direction that most reduces the loss.', long: 'Think of the loss as a landscape — hills are bad predictions, valleys are good ones. The gradient is the steepness vector telling you which way is uphill. Take a step in the opposite direction. Repeat. Variants like Adam add momentum and adaptive step sizes so you do not bounce around or stall in flat regions.' },
+  { n: 'Loss function', c: 'foundations', d: 'Measures how wrong the model is, so training has something to minimize.', long: 'For classification, often cross-entropy. For regression, often mean squared error. The choice matters: it defines what "good" means for the model. Picking a misaligned loss is how you end up with a model that technically minimizes the objective but solves the wrong problem.' },
+  { n: 'Activation function', c: 'foundations', d: 'Non-linearity that lets a network learn anything beyond a straight line.', long: 'Without a non-linear function between layers, stacking layers collapses into a single linear transformation — pointless. ReLU (max of 0 and x) is the default workhorse. GeLU and SwiGLU are common in transformers. The shape of the function matters less than the fact that it bends.' },
+  { n: 'Overfitting', c: 'foundations', d: 'Model memorizes the training data and bombs on anything new.', long: 'The model nails the training set but fails on examples it has not seen. Caused by too much capacity, too little data, or too many training steps. Detected by holding out a validation set. Fixed with regularization, more data, dropout, or smaller models. The opposite — underfitting — means the model is not powerful enough to capture the pattern.' },
+  { n: 'Regularization', c: 'foundations', d: 'Penalties added to training that discourage the model from memorizing.', long: 'L2 (weight decay) shrinks weights toward zero. Dropout randomly disables neurons during training so the network cannot rely on any single one. Early stopping halts training before the model overfits. All are different ways of saying: keep the model humble.' },
+
+  // Architectures
+  { n: 'Transformer', c: 'architectures', d: 'Attention-based architecture under nearly every modern LLM.', long: 'Introduced in the 2017 "Attention Is All You Need" paper. Replaced recurrent networks with self-attention, which lets every token directly attend to every other token in parallel. This made training massively parallelizable on GPUs, which unlocked the scale needed for GPT, Claude, Gemini, and everything since. Decoder-only transformers dominate text generation.' },
+  { n: 'LLM', c: 'architectures', d: 'Large language model — trained on text to predict the next token.', long: 'A transformer (usually decoder-only) trained on a huge corpus of text with one job: given some text, predict the next token. That is it. Every other capability — answering questions, writing code, reasoning — emerges from doing that one task at sufficient scale. "Large" generally means billions of parameters.' },
+  { n: 'VLM', c: 'architectures', d: 'Vision-language model that understands images and text together.', long: 'An LLM with an image encoder bolted on. The encoder turns pixels into tokens the language model can attend to alongside text tokens. This lets the model describe images, answer questions about them, read documents, interpret charts, and navigate UIs. GPT-4o, Claude, and Gemini are all VLMs under the hood now.' },
+  { n: 'Diffusion model', c: 'architectures', d: 'Generates images by iteratively denoising random noise.', long: 'Training: take a real image, add a tiny bit of noise, ask the model to predict the noise. Repeat at every noise level. Inference: start from pure noise and run the process in reverse. The model has learned to "see" the image hiding in the static. Stable Diffusion, Midjourney, and DALL-E 3 all work this way. Increasingly used for video, audio, and even text.' },
+  { n: 'Energy-based model', c: 'architectures', d: 'Assigns low energy to plausible outputs, high energy to implausible ones.', long: 'Instead of directly modeling probability, you learn an energy landscape. Anything close to real data sits in a valley; anything weird sits on a peak. Generation means rolling downhill from somewhere random. Conceptually elegant but historically hard to train at scale. Yann LeCun has been the loudest advocate for them as a path beyond next-token prediction.' },
+  { n: 'Mixture of experts', c: 'architectures', d: 'Routes each input to a sparse subset of specialized sub-networks.', long: 'Instead of one giant network where every parameter activates for every token, you have many smaller "expert" sub-networks. A router picks the top-k experts for each token. Result: you can have a trillion parameters of total capacity but only spend the compute of maybe 30B per token. GPT-4, Mixtral, and DeepSeek-V3 are MoE models.' },
+  { n: 'GAN', c: 'architectures', d: 'Generator vs discriminator pair locked in adversarial training.', long: 'Two networks fight. The generator makes fake samples; the discriminator tries to spot them. Each gets better by beating the other. Was the dominant image generation approach in the late 2010s. Now mostly displaced by diffusion models, which are more stable to train and produce higher quality.' },
+  { n: 'Autoencoder', c: 'architectures', d: 'Compresses input down to a bottleneck and tries to reconstruct it.', long: 'Encoder squeezes input through a narrow layer; decoder tries to recover the original. The bottleneck forces the network to keep only the important information. Variational autoencoders (VAEs) make the bottleneck probabilistic, which lets you sample new examples. The "latent space" inside Stable Diffusion is a VAE.' },
+
+  // Training
+  { n: 'Pretraining', c: 'training', d: 'The big initial training run on broad data — where capability comes from.', long: 'You take a huge corpus (most of the public internet, books, code), and train a model to predict the next token. This is where the model learns grammar, facts, reasoning patterns, and most of what it knows. It is also where almost all the compute is spent. Everything after — fine-tuning, RLHF — is a small polish on top of this foundation.' },
+  { n: 'Fine-tuning', c: 'training', d: 'Adapting a pretrained model to a specific task, domain, or style.', long: 'Take a pretrained model, train it further on a smaller, curated dataset. This is how you turn a raw next-token predictor into something useful: a chat assistant, a code completer, a customer support bot. Full fine-tuning updates all parameters; parameter-efficient methods like LoRA touch just a sliver.' },
+  { n: 'RLHF', c: 'training', d: 'Reinforcement learning from human feedback to shape model behavior.', long: 'Humans rank model outputs from best to worst. A reward model learns to predict those rankings. Then RL is used to make the LLM produce outputs that score highly on the reward model. This is how raw LLMs become assistants that follow instructions and refuse harmful requests. Variants: DPO, RLAIF, and constitutional methods.' },
+  { n: 'Distillation', c: 'training', d: 'Train a small student to mimic a big teacher — most smarts, less compute.', long: 'The big model generates outputs (or predicts probability distributions over outputs). The small model learns to match them. The student inherits a surprising amount of capability for a fraction of the size. This is how a $10M training run becomes a model you can run on your laptop. Half the open-weight model ecosystem is distilled from frontier models.' },
+  { n: 'Supervised learning', c: 'training', d: 'Learning from labeled input-output pairs.', long: 'You provide examples like (input, correct answer). The model learns the mapping. The oldest, simplest, and still most common form of ML. The bottleneck is labels — they are expensive to produce, which is why so much modern work tries to avoid needing them.' },
+  { n: 'Unsupervised learning', c: 'training', d: 'Finding structure in data without labels.', long: 'Clustering, dimensionality reduction, density estimation. The model discovers patterns on its own. Pretraining LLMs is technically self-supervised — you create labels automatically (the next token IS the label) from unlabeled text. This is the key trick that unlocked the modern era: you can use all of the internet without anyone labeling it.' },
+  { n: 'Reinforcement learning', c: 'training', d: 'Agent learns by maximizing reward through trial and error.', long: 'No labels — just a reward signal. The agent takes actions in an environment, sees outcomes, and updates its policy to do more of what worked. Works beautifully when reward is clear (game scores) and brutally when it is not (real-world tasks). Now central to making LLMs reason — RL on math and code is how reasoning models like o1, R1, and Claude with extended thinking got good.' },
+  { n: 'Constitutional AI', c: 'training', d: 'Train a model against a written set of principles rather than purely human ratings.', long: 'Pioneered by Anthropic. You write a "constitution" — a list of principles like "be honest" and "do not help with weapons." The model is trained to critique and revise its own outputs against those principles. Reduces dependence on huge volumes of human rating work and makes values more inspectable.' },
+  { n: 'LoRA', c: 'training', d: 'Cheap fine-tuning by injecting small low-rank adapters into a frozen model.', long: 'Low-Rank Adaptation. Instead of updating billions of weights, you freeze the base model and train tiny matrix factors that get added on top. Same end behavior, ~10,000x fewer trainable parameters, and you can hot-swap LoRAs at runtime. This is why you can fine-tune a 70B model on a single GPU.' },
+
+  // Inference
+  { n: 'RAG', c: 'inference', d: 'Retrieval-augmented generation: fetch relevant docs first, then answer.', long: 'Take the question, search a vector database for relevant chunks, paste those chunks into the prompt, and ask the model to answer using them. Lets you ground a model in proprietary docs, current info, or anything not in its training data. Major downside: retrieval quality is now your bottleneck — bad retrieval, bad answer.' },
+  { n: 'Prompt engineering', c: 'inference', d: 'Crafting inputs to coax better outputs out of a fixed model.', long: 'Phrasing, formatting, example selection, role-setting. Adding "think step by step" can dramatically improve reasoning. Adding examples shifts behavior more than instructions. Mostly empirical — you try things and measure. The field has matured to the point where it is more like UX writing than alchemy.' },
+  { n: 'Chain of thought', c: 'inference', d: 'Ask the model to reason step by step before committing to an answer.', long: 'Originally just a prompting trick: "Let us think step by step." Reliably improved performance on math and reasoning. Now baked into models directly — reasoning models like o1 and Claude with extended thinking generate long internal chains of thought as part of inference. The model gets to spend more compute thinking before answering.' },
+  { n: 'Few-shot', c: 'inference', d: 'Show the model a handful of examples in the prompt to set the pattern.', long: 'Three to five examples of the task you want, then your real input. The model picks up the pattern from the examples. Sometimes more reliable than trying to describe the task in instructions, especially for formatting or style. A core capability that made GPT-3 feel revolutionary.' },
+  { n: 'Zero-shot', c: 'inference', d: 'Ask the model to do a task with no examples — pure instruction following.', long: 'Just describe what you want. Modern instruction-tuned models do this well for most tasks. The fact that this works at all is wild — the model has to interpret your description, generalize from training, and produce an output it has never seen exactly demonstrated.' },
+  { n: 'In-context learning', c: 'inference', d: 'Model adapts to new tasks from prompt examples, no weight updates.', long: 'The model "learns" inside the forward pass, purely from what it sees in context. No gradient updates, no fine-tuning. Still poorly understood mechanistically — somewhere between pattern matching and on-the-fly algorithm execution. Some research suggests transformers can implement gradient descent inside attention layers.' },
+  { n: 'Temperature', c: 'inference', d: 'Knob on randomness in sampling. Higher = more creative, less reliable.', long: 'When the model picks the next token, it has probabilities over all possible tokens. Temperature 0 always picks the most likely one (deterministic). Temperature 1 samples directly from the distribution. Temperature 2 flattens the distribution toward uniform. Higher = more surprising, more error-prone. Most chat uses around 0.7.' },
+  { n: 'Context window', c: 'inference', d: 'How many tokens the model can see at once.', long: 'Modern models range from 8K to 2M tokens. Larger windows let you stuff in whole books or codebases. But long context is not free: attention cost grows with context length, and models often pay less attention to material in the middle of long contexts ("lost in the middle"). Just because a model accepts 1M tokens does not mean it uses them well.' },
+  { n: 'Tokenization', c: 'inference', d: 'Splitting text into the discrete chunks the model actually processes.', long: 'Models do not see characters or words — they see tokens. A token is usually a few characters, often a sub-word. "Unbelievable" might be three tokens. Modern tokenizers use byte-pair encoding. Tokenization has weird side effects: models are bad at counting letters, can be confused by unusual whitespace, and treat different languages with very different efficiency.' },
+  { n: 'Embedding', c: 'inference', d: 'A numeric vector that represents a piece of text, image, or other thing.', long: 'A way to turn unstructured data into a point in high-dimensional space, where geometric distance maps to semantic similarity. The basis of vector search, recommendation systems, and RAG. Models like text-embedding-3 or BGE turn arbitrary text into a vector of 768 or 1536 numbers that you can compare with cosine similarity.' },
+  { n: 'Attention', c: 'inference', d: 'Mechanism that decides which other tokens each token should look at.', long: 'For each token, attention computes a weighted sum over all other tokens, where the weights come from learned compatibility scores (queries dotted with keys). Self-attention lets context flow freely — the model can build up rich representations by mixing information across the whole sequence. The compute cost is quadratic in sequence length, which is why long context is hard.' },
+  { n: 'Quantization', c: 'inference', d: 'Compressing weights to fewer bits so models run faster and cheaper.', long: 'Models are trained in 16- or 32-bit floats but can run in 8-bit, 4-bit, or even less with surprisingly little quality loss. INT4 quantization can cut memory by 4x. This is why you can run a 70B model on consumer hardware. Recent work pushes toward 1-bit weights (BitNet) — same model, fraction of the cost.' },
+  { n: 'Test-time compute', c: 'inference', d: 'Spend more compute at inference to let the model think harder.', long: 'Instead of running the model once, you let it think longer: generate multiple candidates and pick the best, run extended chain-of-thought, search over reasoning steps. Trades inference cost for quality. The o1 / R1 paradigm. A big shift — pre-2024, capability mostly came from bigger training runs; now, from longer inference too.' },
+  { n: 'Hallucination', c: 'inference', d: 'The model confidently states something that is simply not true.', long: 'Made-up citations, invented APIs, fabricated quotes, wrong dates. Not a bug — a structural consequence of training to predict plausible-looking next tokens. The model has no built-in distinction between "I know this" and "this sounds like the kind of thing that would be true." RAG and tool use mitigate it. Reasoning models hallucinate less but still do.' },
+  { n: 'Speculative decoding', c: 'inference', d: 'A small draft model guesses ahead; the big model verifies — faster generation.', long: 'A small fast model proposes the next several tokens; the big model checks them in parallel. Most proposals are accepted, you commit them, and continue. Yields 2-3x faster generation with identical output to the big model alone. Common in production serving.' },
+
+  // Agents
+  { n: 'Agent', c: 'agents', d: 'An LLM running in a loop, taking actions to accomplish a goal.', long: 'A model gets a goal, picks an action (search the web, write a file, call an API), sees the result, decides what to do next. Loop until done. The promise: software that does multi-step work autonomously. The reality: still flaky on long horizons. Compounding error rates, context bloat, and unclear stopping criteria are the open problems.' },
+  { n: 'Tool use', c: 'agents', d: 'Letting the model call external functions, APIs, or code.', long: 'The model is given a list of available tools with their signatures. It decides when to call which one, and with what arguments. The tool runs, the result comes back into the context, and the model continues. This is the bridge from "language model" to "thing that does stuff in the world."' },
+  { n: 'MCP', c: 'agents', d: 'Model Context Protocol — open standard for hooking tools into LLMs.', long: 'A spec from Anthropic for how tools, data sources, and prompts get exposed to LLMs in a standard way. Lets one MCP server (say, GitHub or a database) be used by any MCP-compatible client (Claude, IDE plugins, agents). Aims to do for AI tool integration what USB did for peripherals.' },
+  { n: 'Function calling', c: 'agents', d: 'Structured output schema so a model returns a clean function call, not prose.', long: 'You provide a JSON schema describing available functions and their parameters. The model returns a structured call rather than free-form text. Much more reliable than parsing tools out of natural language. The substrate underneath modern tool use and agent frameworks.' },
+
+  // Big picture
+  { n: "Jevons' paradox", c: 'meta', d: 'When efficiency gains drive total consumption up, not down.', long: 'Coined in 1865 about coal: making steam engines more efficient made coal cheaper to use, so people used way more coal overall. Applied to AI: as inference gets cheaper, total inference demand explodes faster than the per-call savings. The reason "GPUs are getting cheaper" has not lowered total GPU spending — it has lowered the price of intelligence, which sparks more uses than would otherwise exist.' },
+  { n: 'Scaling laws', c: 'meta', d: 'Predictable trade-offs between compute, data, parameters, and capability.', long: 'Power-law relationships discovered by OpenAI and DeepMind: double compute, get a predictable bump in loss. "Chinchilla" scaling showed that for a given compute budget, the optimal ratio is roughly 20 training tokens per parameter. These laws let labs forecast capability before they spend the money. They are also the reason "just make it bigger" worked as well as it did.' },
+  { n: 'Emergence', c: 'meta', d: 'Capabilities that appear suddenly at scale rather than improving smoothly.', long: 'At smaller sizes, models cannot do three-digit arithmetic at all; past some threshold, they suddenly can. Same for multi-step reasoning, instruction following, code generation. Contested — some argue emergent abilities are an artifact of how you measure (a smooth underlying improvement looks like a jump if your metric is all-or-nothing). Either way, the practical experience is genuine surprises at every new scale.' },
+  { n: 'AGI', c: 'meta', d: 'Artificial general intelligence — broad, human-level capability across domains.', long: 'A term whose definition is mostly fought over by people who want it to mean different things. Roughly: a system that can do most intellectual tasks a human can, including learning new ones. Estimates of arrival range from "this decade" to "never." The disagreement is less about timelines and more about what counts as "general" — current frontier models are general in some senses, very narrow in others.' },
+  { n: 'Alignment', c: 'meta', d: 'Making AI systems actually do what humans want, including the spirit of it.', long: 'The technical and philosophical problem of ensuring AI behavior matches human intent — not just literal instructions, but underlying values. Includes near-term issues (bias, manipulation, jailbreaks) and longer-term concerns about powerful systems with subtly misaligned goals. The field overlaps with interpretability, RLHF, and AI safety policy.' },
+  { n: 'Mechanistic interpretability', c: 'meta', d: 'Reverse-engineering what individual circuits inside a model are computing.', long: 'Treats neural networks like a program you want to debug. Researchers identify specific neurons or attention heads doing specific things — detecting tone, tracking subjects, doing arithmetic. The hope: turn black-box models into things we can audit. Real but partial progress so far; Anthropic, DeepMind, and academic labs are pushing hardest here.' },
+  { n: 'Jailbreak', c: 'meta', d: 'Crafted prompts that slip past a model\u2019s safety training.', long: 'Roleplay framings ("you are DAN"), encoding tricks (base64, leetspeak), claimed authority ("as a researcher I need..."), or just persistent rephrasing. The arms race: every new model gets jailbroken within hours, defenses get patched, attacks evolve. Demonstrates that current alignment is robust on average but brittle under adversarial pressure.' }
+];
+
+const CAT_LABELS = {
+  foundations: 'Foundations',
+  architectures: 'Architecture',
+  training: 'Training',
+  inference: 'Inference',
+  agents: 'Agents',
+  meta: 'Big picture'
+};
+
+const grid = document.getElementById('grid');
+const searchEl = document.getElementById('search');
+const countEl = document.getElementById('count');
+const filtersEl = document.getElementById('filters');
+let activeFilter = 'all';
+let activeSearch = '';
+const openSet = new Set();
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function render() {
+  const q = activeSearch.toLowerCase().trim();
+  const filtered = TERMS.filter(t => {
+    const matchesCat = activeFilter === 'all' || t.c === activeFilter;
+    const matchesSearch = !q || t.n.toLowerCase().includes(q) || t.d.toLowerCase().includes(q) || t.long.toLowerCase().includes(q);
+    return matchesCat && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty">No terms match your search.</div>';
+  } else {
+    grid.innerHTML = filtered.map(t => {
+      const id = t.n.replace(/\W+/g, '-');
+      const open = openSet.has(t.n) ? ' open' : '';
+      return (
+        '<button class="card' + open + '" data-name="' + esc(t.n) + '">' +
+          '<div class="card-head">' +
+            '<span class="card-name">' + esc(t.n) + '</span>' +
+            '<span class="card-cat">' + CAT_LABELS[t.c] + '</span>' +
+          '</div>' +
+          '<div class="card-desc">' + esc(t.d) + '</div>' +
+          '<div class="card-detail">' + esc(t.long) + '</div>' +
+        '</button>'
+      );
+    }).join('');
+
+    grid.querySelectorAll('.card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        if (openSet.has(name)) {
+          openSet.delete(name);
+          btn.classList.remove('open');
+        } else {
+          openSet.add(name);
+          btn.classList.add('open');
+        }
+      });
+    });
+  }
+
+  countEl.textContent = filtered.length + ' term' + (filtered.length === 1 ? '' : 's');
+}
+
+filtersEl.addEventListener('click', e => {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  filtersEl.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  activeFilter = btn.getAttribute('data-f');
+  render();
+});
+
+searchEl.addEventListener('input', e => {
+  activeSearch = e.target.value;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
