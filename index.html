@@ -121,7 +121,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .relation-item:hover{background:var(--blue-soft);color:var(--blue)}
 
 .timeline-controls{display:grid;grid-template-columns:1fr auto;gap:16px;padding:16px;margin-bottom:14px}
-.range-wrap{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.range-wrap{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;grid-column:1/-1}
 .range-wrap input{width:100%}
 .timeline-scroll{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--paper);position:relative}
 .timeline-board{position:relative;min-width:1200px}
@@ -191,6 +191,36 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .rag-doc{padding:9px;border:1px solid var(--line);border-radius:9px;margin-top:6px;font-size:10px;cursor:pointer}.rag-doc.selected{border-color:var(--blue);background:var(--blue-soft)}
 .cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}.cost-box{padding:10px;border:1px solid var(--line);border-radius:10px}.cost-box span{display:block;font:9px "JetBrains Mono",monospace;color:var(--quiet)}.cost-box strong{font:500 18px "Source Serif 4",serif}
 
+
+/* Model builder */
+.builder-layout{display:grid;grid-template-columns:220px minmax(0,1fr) 370px;gap:14px;align-items:start}
+.builder-steps{padding:12px;position:sticky;top:79px}
+.builder-step{width:100%;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;border:0;background:transparent;border-radius:11px;padding:10px;text-align:left;cursor:pointer}
+.builder-step:hover,.builder-step.active{background:var(--paper2)}
+.builder-step.done .builder-step-num{background:var(--blue);color:white;border-color:var(--blue)}
+.builder-step-num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);font:9px "JetBrains Mono",monospace;color:var(--quiet)}
+.builder-step strong{display:block;font-size:11px}.builder-step span{display:block;font-size:9px;color:var(--quiet);margin-top:2px;line-height:1.35}
+.builder-wizard{padding:26px;min-height:570px}
+.builder-progress{height:4px;background:var(--paper2);border-radius:999px;overflow:hidden;margin-bottom:28px}.builder-progress i{display:block;height:100%;background:var(--blue);border-radius:999px;transition:width .25s ease}
+.builder-question-kicker{font:10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.09em;color:var(--blue)}
+.builder-question h3{font:500 37px/1.05 "Source Serif 4",serif;letter-spacing:-.035em;margin:8px 0 10px}.builder-question>p{font-size:12px;color:var(--muted);max-width:620px;margin:0 0 22px}
+.builder-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.builder-choice{border:1px solid var(--line);background:var(--paper2);border-radius:14px;padding:15px;text-align:left;cursor:pointer;min-height:116px;position:relative}
+.builder-choice:hover{border-color:var(--line2);transform:translateY(-1px)}.builder-choice.active{border-color:var(--blue);background:var(--blue-soft);box-shadow:0 0 0 1px var(--blue) inset}
+.builder-choice-icon{font:18px "Source Serif 4",serif;color:var(--blue);display:block;margin-bottom:10px}.builder-choice strong{font-size:12px;display:block}.builder-choice p{font-size:10px;color:var(--muted);margin:5px 0 0;line-height:1.45}
+.builder-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.builder-blueprint{padding:20px;position:sticky;top:79px;max-height:calc(100vh - 98px);overflow:auto}
+.builder-blueprint h3{font:500 28px/1.05 "Source Serif 4",serif;letter-spacing:-.03em;margin:7px 0 8px}.builder-blueprint>p{font-size:11px;color:var(--muted);margin:0 0 16px}
+.blueprint-block{border-top:1px solid var(--line);padding-top:13px;margin-top:13px}.blueprint-label{font:9px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--quiet);margin-bottom:7px}
+.blueprint-value{font-size:12px;line-height:1.55}.blueprint-list{display:grid;gap:6px}.blueprint-list div{font-size:10px;color:var(--muted);padding-left:13px;position:relative}.blueprint-list div:before{content:"";position:absolute;left:1px;top:7px;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.model-picks{display:grid;gap:8px}.model-pick{border:1px solid var(--line);border-radius:12px;padding:11px;background:var(--paper2)}.model-pick:first-child{border-color:var(--blue);background:var(--blue-soft)}
+.model-pick-head{display:flex;justify-content:space-between;gap:8px;align-items:start}.model-pick strong{font-size:11px}.model-pick .provider{font:8px "JetBrains Mono",monospace;text-transform:uppercase;color:var(--blue)}.model-pick p{font-size:9px;color:var(--muted);margin:5px 0 8px}.model-pick a{font-size:9px;color:var(--blue);text-decoration:none}
+.builder-architecture{padding:22px;margin-top:14px}.builder-architecture-head{display:flex;justify-content:space-between;gap:20px;align-items:end}.builder-architecture-head h3{font:500 28px "Source Serif 4",serif;margin:0}.builder-architecture-head p{font-size:10px;color:var(--muted);margin:4px 0 0}
+.builder-flow{display:flex;align-items:stretch;overflow:auto;padding:22px 0 5px;min-width:0}.builder-flow-stage{min-width:150px;flex:1;border:1px solid var(--line);background:var(--paper2);border-radius:13px;padding:13px}.builder-flow-stage span{font:8px "JetBrains Mono",monospace;color:var(--blue);text-transform:uppercase}.builder-flow-stage strong{display:block;font-size:11px;margin:7px 0 5px}.builder-flow-stage p{font-size:9px;color:var(--muted);margin:0}.builder-flow-arrow{width:32px;min-width:32px;display:grid;place-items:center;color:var(--quiet)}
+.builder-plan{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.builder-plan-card{padding:15px}.builder-plan-card .num{font:10px "JetBrains Mono",monospace;color:var(--blue)}.builder-plan-card h4{font-size:12px;margin:8px 0 5px}.builder-plan-card p{font-size:10px;color:var(--muted);margin:0}
+.builder-note{font-size:9px;color:var(--quiet);margin-top:12px;line-height:1.5}.builder-note a{color:var(--blue)}
+.graph-node:focus{outline:none}.graph-node:focus circle:first-of-type{stroke-width:3}.crowd-badge{pointer-events:none}.graph-node.crowded circle:first-of-type{stroke-dasharray:3 2}
+
 .debate-map{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .debate{padding:20px;cursor:pointer}
 .debate:hover{border-color:var(--line2)}
@@ -243,7 +273,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 
 @media(max-width:1180px){
   .atlas-grid{grid-template-columns:210px 1fr}.inspector{grid-column:1/-1;max-height:none}
-  .globe-layout,.people-layout{grid-template-columns:1fr}.place-side,.lineage-panel{position:static;max-height:none}
+  .globe-layout,.people-layout,.builder-layout{grid-template-columns:1fr}.place-side,.lineage-panel,.builder-steps,.builder-blueprint{position:static;max-height:none}
   .people-grid{grid-template-columns:repeat(3,1fr)}
   .glossary-grid{grid-template-columns:repeat(3,1fr)}
 }
@@ -255,7 +285,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
   .globe-layout{grid-template-columns:1fr}.globe-panel,#globeCanvas{min-height:580px;height:580px}
   .people-grid{grid-template-columns:repeat(2,1fr)}
   .system-layout{grid-template-columns:1fr}.system-menu{position:static;display:flex;overflow:auto}.system-btn{min-width:180px}
-  .labs,.debate-map{grid-template-columns:1fr}
+  .labs,.debate-map{grid-template-columns:1fr}.builder-plan{grid-template-columns:repeat(2,1fr)}
   .glossary-grid{grid-template-columns:repeat(2,1fr)}
   .modal-columns{grid-template-columns:1fr}
 }
@@ -265,7 +295,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
   .graph-panel,#conceptGraph{height:520px}
   .timeline-list,.people-grid,.glossary-grid{grid-template-columns:1fr}
   .glossary-toolbar,.people-toolbar{grid-template-columns:1fr}
-  .debate-sides{grid-template-columns:1fr}
+  .debate-sides,.builder-choice-grid,.builder-plan{grid-template-columns:1fr}
   .tour-body{grid-template-columns:1fr;padding:28px}.tour-year{font-size:34px}
   .compare-tray{overflow:auto;justify-content:flex-start}
 }
@@ -282,6 +312,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       <button class="nav-btn" data-view="globe">Globe</button>
       <button class="nav-btn" data-view="people">People</button>
       <button class="nav-btn" data-view="systems">Systems</button>
+      <button class="nav-btn" data-view="builder">Build a Model</button>
       <button class="nav-btn" data-view="debates">Debates</button>
       <button class="nav-btn" data-view="glossary">Glossary</button>
     </nav>
@@ -378,7 +409,6 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
           <input type="range" id="timelineZoom" min="1" max="5" value="2" step=".25" aria-label="Timeline zoom">
           <span class="mono" id="timelineEndLabel">2026</span>
         </div>
-        <button class="action" id="timelinePlay">Play history</button>
       </div>
       <div class="timeline-scroll" id="timelineScroll"><div class="timeline-board" id="timelineBoard"></div></div>
       <div class="timeline-legend" id="timelineLegend"></div>
@@ -468,6 +498,21 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
+    <section class="view" id="view-builder">
+      <div class="view-head">
+        <div><h2>Build your own model</h2><p>A choose-your-own-adventure design studio. Define the job, data sensitivity, quality target, deployment model, customization level, and scale; the atlas turns those choices into a practical architecture and current off-the-shelf shortlist.</p></div>
+        <div class="view-meta">Design first · models second</div>
+      </div>
+      <div class="builder-layout">
+        <aside class="panel builder-steps" id="builderSteps"></aside>
+        <div class="panel builder-wizard" id="builderWizard"></div>
+        <aside class="panel builder-blueprint" id="builderBlueprint"></aside>
+      </div>
+      <div class="panel builder-architecture" id="builderArchitecture"></div>
+      <div class="builder-plan" id="builderPlan"></div>
+      <p class="builder-note">Model catalogs change quickly. Recommendations are a decision framework, not a procurement guarantee. The option set is tied to official provider documentation and was reviewed July 16, 2026.</p>
+    </section>
+
     <section class="view" id="view-debates">
       <div class="view-head">
         <div><h2>The field is not settled</h2><p>Each debate is presented as competing strong arguments rather than a caricature. Expand a card to inspect the unresolved question.</p></div>
@@ -536,11 +581,11 @@ const laneColors = {
   Agents:"#0e7b61"
 };
 let state = {
-  view:"explore", concept:"Transformer", category:"All", graphScale:1, graphX:0, graphY:0,
+  view:"explore", concept:"Transformer", category:"All", graphScale:1, graphX:0, graphY:0, graphBurst:null,
   timelineStart:2012,timelineEnd:2026,timelineZoom:2,activeLanes:new Set(),
   globeKind:"All", selectedPlace:"San Francisco", globeLon:-25, globeLat:15, globeSpin:true,
   peopleQuery:"",peopleSchool:"All",selectedPerson:"Alan Turing",
-  system:0, stage:0, termQuery:"",termCategory:"All",termLimit:48,compare:[],
+  system:0, stage:0, builderStep:0, builderAnswers:{goal:"assistant",data:"internal",priority:"balanced",deployment:"api",customization:"rag",scale:"prototype"}, termQuery:"",termCategory:"All",termLimit:48,compare:[],
   tourIndex:0,tourStep:0
 };
 function toast(msg){
@@ -554,6 +599,7 @@ function showView(name, scroll=true){
   if(scroll) window.scrollTo({top:Math.max(0,$(".hero").offsetHeight+20),behavior:"smooth"});
   if(name==="globe") setTimeout(resizeGlobe,60);
   if(name==="systems") setTimeout(drawGradient,60);
+  if(name==="builder") setTimeout(renderModelBuilder,20);
 }
 $$(".nav-btn").forEach(b=>b.onclick=()=>showView(b.dataset.view));
 $("#themeBtn").onclick=()=>{document.body.classList.toggle("dark");try{localStorage.setItem("atlasTheme",document.body.classList.contains("dark")?"dark":"light")}catch(e){}drawGlobe();drawGradient();};
@@ -609,7 +655,8 @@ const searchIndex = [
   ...DATA.events.map(x=>({type:"Event",title:x.title,desc:x.summary,year:x.year,view:"timeline",key:x.title})),
   ...DATA.people.map(x=>({type:"Person",title:x.name,desc:x.contribution,year:x.life,view:"people",key:x.name})),
   ...DATA.places.map(x=>({type:"Place",title:x.name,desc:x.summary,year:x.kind,view:"globe",key:x.name})),
-  ...DATA.systems.map((x,i)=>({type:"System",title:x.title,desc:x.subtitle,year:"Pipeline",view:"systems",key:i}))
+  ...DATA.systems.map((x,i)=>({type:"System",title:x.title,desc:x.subtitle,year:"Pipeline",view:"systems",key:i})),
+  {type:"Guide",title:"Build your own model",desc:"Choose a model type, deployment pattern, customization strategy, and off-the-shelf stack.",year:"Interactive",view:"builder",key:"builder"}
 ];
 function renderGlobalSearch(){
   const q=norm($("#globalSearch").value.trim()), box=$("#searchResults");
@@ -634,6 +681,7 @@ function activateSearchResult(type,key){
   if(type==="Person"){showView("people");selectPerson(key);}
   if(type==="Place"){showView("globe");selectPlace(key);}
   if(type==="System"){state.system=Number(key);showView("systems");renderSystems();}
+  if(type==="Guide"){showView("builder");renderModelBuilder();}
 }
 $("#globalSearch").oninput=renderGlobalSearch;
 $("#globalSearch").onfocus=renderGlobalSearch;
@@ -661,36 +709,92 @@ function graphSubset(){
   const cross=DATA.terms.filter(t=>t.category!==selected.category && neighbors(t.name).some(n=>n.name===selected.name));
   return [selected,...direct.slice(0,18),...cross.slice(0,8),...peers.slice(0,20)].filter((x,i,a)=>a.findIndex(y=>y.name===x.name)===i).slice(0,46);
 }
+let graphLayout={clusterByNode:new Map(),positions:[]};
+function resolveGraphCollisions(nodes,w,h){
+  const out=nodes.map(n=>({...n})), margin=34;
+  for(let pass=0;pass<90;pass++){
+    let moved=false;
+    for(let i=0;i<out.length;i++)for(let j=i+1;j<out.length;j++){
+      const a=out[i],b=out[j],dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy)||.01;
+      const min=a.r+b.r+(Math.min(w,h)<600?12:20);
+      if(dist<min){
+        const push=(min-dist)/2,ux=dx/dist,uy=dy/dist;
+        if(i!==0){a.x-=ux*push;a.y-=uy*push}
+        if(j!==0){b.x+=ux*push;b.y+=uy*push}
+        moved=true;
+      }
+    }
+    for(let i=1;i<out.length;i++){
+      const n=out[i];
+      n.x=Math.max(margin+n.r,Math.min(w-margin-n.r,n.x));
+      n.y=Math.max(margin+n.r,Math.min(h-margin-n.r-22,n.y));
+    }
+    if(!moved)break;
+  }
+  return out;
+}
+function graphCrowdClusters(nodes){
+  const parent=nodes.map((_,i)=>i),find=i=>parent[i]===i?i:(parent[i]=find(parent[i])),join=(a,b)=>{a=find(a);b=find(b);if(a!==b)parent[b]=a};
+  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+    const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<a.r+b.r+3)join(i,j);
+  }
+  const groups=new Map();nodes.forEach((n,i)=>{const root=find(i);if(!groups.has(root))groups.set(root,[]);groups.get(root).push(n)});
+  return [...groups.values()].filter(g=>g.length>1);
+}
 function renderGraph(){
   const svg=$("#conceptGraph"), w=svg.clientWidth||760,h=svg.clientHeight||720;
   svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
-  const nodes=graphSubset(), selected=nodes[0], cx=w/2,cy=h/2;
-  const positioned=nodes.map((n,i)=>{
+  const maxNodes=w<620?30:46;
+  const nodes=graphSubset().slice(0,maxNodes), selected=nodes[0], cx=w/2,cy=h/2;
+  let positioned=nodes.map((n,i)=>{
     if(i===0)return {...n,x:cx,y:cy,r:44};
     const direct=neighbors(selected.name).some(x=>x.name===n.name);
-    const ring=direct?1:2, index=direct?i-1:i-1-neighbors(selected.name).length;
-    const count=direct?Math.max(8,Math.min(18,nodes.length-1)):Math.max(12,nodes.length-1);
+    const ring=direct?1:2;
     const angle=(i*2.399963229728653)+(n.year%17)*.025;
     const radius=ring===1?Math.min(w,h)*.23:Math.min(w,h)*.39;
     return {...n,x:cx+Math.cos(angle)*radius,y:cy+Math.sin(angle)*radius,r:direct?25:18};
   });
+  positioned=resolveGraphCollisions(positioned,w,h);
+  if(state.graphBurst&&state.graphBurst.names){
+    const members=positioned.filter(n=>state.graphBurst.names.includes(n.name));
+    if(members.length>1){
+      const ax=Math.max(100,Math.min(w-100,state.graphBurst.x)),ay=Math.max(100,Math.min(h-100,state.graphBurst.y));
+      const radius=Math.min(112,54+members.length*7);
+      members.forEach((n,i)=>{const a=-Math.PI/2+i*Math.PI*2/members.length;n.x=ax+Math.cos(a)*radius;n.y=ay+Math.sin(a)*radius});
+    }
+  }
+  const clusters=graphCrowdClusters(positioned),clusterByNode=new Map();
+  clusters.forEach(group=>group.forEach(n=>clusterByNode.set(n.name,group)));
+  graphLayout={clusterByNode,positions:positioned};
   const nodeMap=new Map(positioned.map(n=>[n.name,n]));
   const edgeSet=[];
   DATA.relations.forEach(r=>{if(nodeMap.has(r.a)&&nodeMap.has(r.b))edgeSet.push(r)});
-  // add faint category spokes when explicit relationships are sparse
   positioned.slice(1).forEach(n=>{if(!edgeSet.some(e=>(e.a===selected.name&&e.b===n.name)||(e.b===selected.name&&e.a===n.name)) && n.category===selected.category)edgeSet.push({a:selected.name,b:n.name,faint:true})});
   svg.innerHTML=`<g id="graphWorld" transform="translate(${state.graphX} ${state.graphY}) scale(${state.graphScale})">
     <g>${edgeSet.map(e=>{const a=nodeMap.get(e.a),b=nodeMap.get(e.b);return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="var(--line2)" stroke-width="${e.faint?.7:1.25}" opacity="${e.faint?.35:.8}"/>`}).join("")}</g>
     <g>${positioned.map(n=>{
-      const c=categoryColors[n.category]||"#1769e0",sel=n.name===selected.name;
-      return `<g class="graph-node" data-name="${esc(n.name)}" transform="translate(${n.x} ${n.y})" style="cursor:pointer">
+      const c=categoryColors[n.category]||"#1769e0",sel=n.name===selected.name,cluster=clusterByNode.get(n.name),crowded=cluster&&cluster.length>1&&!state.graphBurst;
+      return `<g class="graph-node ${crowded?"crowded":""}" data-name="${esc(n.name)}" transform="translate(${n.x} ${n.y})" style="cursor:pointer" role="button" tabindex="0" aria-label="Open ${esc(n.name)}">
         <circle r="${n.r+5}" fill="${sel?"color-mix(in srgb, "+c+" 16%, var(--paper))":"var(--paper)"}" stroke="${c}" stroke-width="${sel?2.5:1.2}"/>
         <circle r="${sel?8:4}" fill="${c}"/>
+        ${crowded?`<g class="crowd-badge" transform="translate(${n.r-2} ${-n.r+2})"><circle r="9" fill="${c}"/><text y="3" text-anchor="middle" fill="white" font-family="JetBrains Mono" font-size="7">${cluster.length}</text></g>`:""}
         <text y="${n.r+18}" text-anchor="middle" fill="var(--ink)" font-family="Inter" font-size="${sel?12:9}" font-weight="${sel?700:500}">${esc(n.name.length>28?n.name.slice(0,26)+"…":n.name)}</text>
         <title>${esc(n.name)} — ${esc(n.description)}</title>
       </g>`;
     }).join("")}</g></g>`;
-  $$(".graph-node",svg).forEach(g=>g.onclick=e=>{e.stopPropagation();selectConcept(g.dataset.name);});
+  const activateNode=g=>{
+    const name=g.dataset.name,cluster=graphLayout.clusterByNode.get(name);
+    if(cluster&&cluster.length>1&&!state.graphBurst){
+      const x=cluster.reduce((a,n)=>a+n.x,0)/cluster.length,y=cluster.reduce((a,n)=>a+n.y,0)/cluster.length;
+      state.graphBurst={names:cluster.map(n=>n.name),x,y};renderGraph();toast("Crowded nodes separated. Choose the concept you want.");return;
+    }
+    selectConcept(name);
+  };
+  $$(".graph-node",svg).forEach(g=>{
+    g.onclick=e=>{e.stopPropagation();activateNode(g)};
+    g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();activateNode(g)}};
+  });
 }
 function updateWorldTransform(){
   const g=$("#graphWorld");if(g)g.setAttribute("transform",`translate(${state.graphX} ${state.graphY}) scale(${state.graphScale})`);
@@ -698,6 +802,7 @@ function updateWorldTransform(){
 function selectConcept(name){
   if(!byName.has(name))return;
   state.concept=name;state.category=state.category==="All"?"All":byName.get(name).category;
+  state.graphScale=1;state.graphX=0;state.graphY=0;state.graphBurst=null;
   renderCategoryList();renderGraph();renderConceptInspector();
 }
 window.selectConcept=selectConcept;
@@ -722,10 +827,10 @@ function renderConceptInspector(mode="all"){
 }
 $("#zoomIn").onclick=()=>{state.graphScale=Math.min(2.5,state.graphScale*1.18);updateWorldTransform()};
 $("#zoomOut").onclick=()=>{state.graphScale=Math.max(.55,state.graphScale/1.18);updateWorldTransform()};
-$("#zoomReset").onclick=()=>{state.graphScale=1;state.graphX=0;state.graphY=0;updateWorldTransform()};
+$("#zoomReset").onclick=()=>{state.graphScale=1;state.graphX=0;state.graphY=0;state.graphBurst=null;renderGraph()};
 $("#randomConcept").onclick=()=>{const pool=DATA.terms.filter(t=>state.category==="All"||t.category===state.category);selectConcept(pool[Math.floor(Math.random()*pool.length)].name)};
 let graphDrag=null;
-$("#conceptGraph").addEventListener("pointerdown",e=>{graphDrag={x:e.clientX,y:e.clientY,ox:state.graphX,oy:state.graphY};$("#graphPanel").classList.add("dragging");e.currentTarget.setPointerCapture(e.pointerId)});
+$("#conceptGraph").addEventListener("pointerdown",e=>{if(e.target.closest(".graph-node"))return;graphDrag={x:e.clientX,y:e.clientY,ox:state.graphX,oy:state.graphY};$("#graphPanel").classList.add("dragging");e.currentTarget.setPointerCapture(e.pointerId)});
 $("#conceptGraph").addEventListener("pointermove",e=>{if(!graphDrag)return;state.graphX=graphDrag.ox+(e.clientX-graphDrag.x);state.graphY=graphDrag.oy+(e.clientY-graphDrag.y);updateWorldTransform()});
 $("#conceptGraph").addEventListener("pointerup",()=>{graphDrag=null;$("#graphPanel").classList.remove("dragging")});
 $("#conceptGraph").addEventListener("wheel",e=>{e.preventDefault();const factor=e.deltaY<0?1.1:.9;state.graphScale=Math.max(.55,Math.min(2.5,state.graphScale*factor));updateWorldTransform()},{passive:false});
@@ -786,13 +891,6 @@ window.eventModal=eventModal;window.showView=showView;
 $(".timeline-era[data-start='2012']").classList.add("active");
 $$(".timeline-era").forEach(b=>b.onclick=()=>{$$(".timeline-era").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.timelineStart=Number(b.dataset.start);state.timelineEnd=Number(b.dataset.end);renderTimeline()});
 $("#timelineZoom").oninput=e=>{state.timelineZoom=Number(e.target.value);renderTimeline()};
-let playTimer=null,playIndex=0;
-$("#timelinePlay").onclick=()=>{
-  if(playTimer){clearInterval(playTimer);playTimer=null;$("#timelinePlay").textContent="Play history";return}
-  const evs=DATA.events.filter(e=>e.year>=state.timelineStart&&e.year<=state.timelineEnd&&state.activeLanes.has(e.lane)).sort((a,b)=>a.year-b.year);if(!evs.length)return;
-  $("#timelinePlay").textContent="Pause";playIndex=0;
-  playTimer=setInterval(()=>{if(playIndex>=evs.length){clearInterval(playTimer);playTimer=null;$("#timelinePlay").textContent="Play history";return}const e=evs[playIndex++];const btn=$(`[data-event="${CSS.escape(e.title)}"]`,$("#timelineBoard"));if(btn){btn.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});btn.animate([{transform:"scale(1)"},{transform:"scale(1.6)"},{transform:"scale(1)"}],{duration:650});}},900);
-};
 $("#timelineLegend").innerHTML=allLanes.map(l=>`<span class="legend-dot"><i style="background:${laneColors[l]||"#1769e0"}"></i>${esc(l)}</span>`).join("");
 
 /* ---------- Globe ---------- */
@@ -968,6 +1066,156 @@ function renderCost(){
 }
 ["reqSlider","tokSlider","costSlider"].forEach(id=>$("#"+id).oninput=renderCost);
 
+
+/* ---------- Build a model ---------- */
+const BUILDER_STEPS=[
+  {id:"goal",eyebrow:"01 · Job",title:"What should the system do?",help:"Start with the product behavior, not a favorite model. The task determines whether you need an LLM, a multimodal model, a specialist model, or conventional machine learning.",choices:[
+    {id:"assistant",icon:"A",label:"Knowledge assistant",desc:"Answer questions, explain material, and work over a defined body of knowledge."},
+    {id:"agent",icon:"↻",label:"Tool-using agent",desc:"Plan, call APIs, operate software, and complete controlled multi-step work."},
+    {id:"extraction",icon:"▦",label:"Extraction & classification",desc:"Turn documents, messages, or images into reliable structured fields and labels."},
+    {id:"coding",icon:"</>",label:"Coding system",desc:"Understand repositories, write code, review changes, and operate developer tools."},
+    {id:"vision",icon:"◉",label:"Vision & documents",desc:"Interpret images, PDFs, charts, layouts, forms, or mixed visual evidence."},
+    {id:"voice",icon:"≈",label:"Realtime voice",desc:"Listen, transcribe, reason, and respond conversationally with low latency."},
+    {id:"media",icon:"◇",label:"Image or video generation",desc:"Generate or edit visual media from text, images, or conversational direction."},
+    {id:"predictive",icon:"ƒ",label:"Predictive model",desc:"Forecast a number, probability, ranking, or class from structured historical data."}
+  ]},
+  {id:"data",eyebrow:"02 · Evidence",title:"What data may the system use?",help:"The data boundary determines retrieval, security, deployment, and whether a hosted API is acceptable.",choices:[
+    {id:"public",icon:"○",label:"Public or low-sensitivity",desc:"Internet, public datasets, product content, or non-confidential user inputs."},
+    {id:"internal",icon:"▣",label:"Private organizational data",desc:"Internal documents, customer records, repositories, or proprietary knowledge."},
+    {id:"regulated",icon:"◆",label:"Regulated or highly sensitive",desc:"Health, financial, legal, government, personal, or contractually restricted data."}
+  ]},
+  {id:"priority",eyebrow:"03 · Trade-off",title:"What matters most?",help:"There is no universally best model. Capability, latency, and unit economics must be measured on your actual task.",choices:[
+    {id:"capability",icon:"↑",label:"Maximum capability",desc:"Use the strongest model where errors or difficult reasoning dominate cost."},
+    {id:"balanced",icon:"=",label:"Balanced production",desc:"Optimize for strong quality with practical latency and operating expense."},
+    {id:"volume",icon:"×",label:"Speed and high volume",desc:"Prefer smaller, faster models and route only difficult cases upward."}
+  ]},
+  {id:"deployment",eyebrow:"04 · Control",title:"Where should inference run?",help:"Deployment determines operational burden, privacy control, upgrade cadence, and the range of models available.",choices:[
+    {id:"api",icon:"☁",label:"Hosted model API",desc:"Fastest path to frontier capability with minimal infrastructure ownership."},
+    {id:"managed",icon:"▤",label:"Managed enterprise cloud",desc:"Use a major cloud or managed endpoint for governance, networking, and procurement."},
+    {id:"self",icon:"▰",label:"Self-hosted open weights",desc:"Operate model weights in your cloud or data center for control and customization."},
+    {id:"local",icon:"⌂",label:"Local or edge device",desc:"Keep inference close to the user or data, accepting tighter hardware constraints."}
+  ]},
+  {id:"customization",eyebrow:"05 · Adaptation",title:"How much should you customize?",help:"Use the least invasive method that reliably solves the task. Most products should not begin by training a foundation model.",choices:[
+    {id:"prompt",icon:"1",label:"Prompt and structured output",desc:"Use instructions, examples, schemas, and tools without changing model weights."},
+    {id:"rag",icon:"2",label:"Retrieval-augmented generation",desc:"Retrieve trusted material at run time and require the model to answer from it."},
+    {id:"finetune",icon:"3",label:"Fine-tune or adapters",desc:"Train behavior, format, vocabulary, or a narrow skill into a strong base model."},
+    {id:"scratch",icon:"4",label:"Train from scratch",desc:"Build new weights only when research novelty, data, capital, and control justify it."}
+  ]},
+  {id:"scale",eyebrow:"06 · Operation",title:"How far must the first version go?",help:"A prototype can be simple. A production system needs evaluation, observability, fallback behavior, security, and a model-upgrade process.",choices:[
+    {id:"prototype",icon:"P",label:"Prototype",desc:"Prove the user value and evaluate candidate models with a small representative set."},
+    {id:"team",icon:"T",label:"Internal team workflow",desc:"Serve a bounded group with authentication, permissions, feedback, and basic monitoring."},
+    {id:"production",icon:"R",label:"Customer-facing production",desc:"Design for reliability, safety, versioning, support, and measurable service levels."},
+    {id:"massive",icon:"M",label:"High-scale platform",desc:"Route models, batch work, cache results, optimize inference, and engineer graceful degradation."}
+  ]}
+];
+const MODEL_CATALOG={
+  "gpt-sol":{name:"GPT-5.6 Sol",provider:"OpenAI",deploy:["api","managed"],why:"Frontier option for complex professional reasoning, coding, tool use, and difficult multi-step work.",url:"https://developers.openai.com/api/docs/models"},
+  "gpt-terra":{name:"GPT-5.6 Terra",provider:"OpenAI",deploy:["api","managed"],why:"Balanced OpenAI option when quality matters but the flagship cost profile is unnecessary.",url:"https://developers.openai.com/api/docs/models"},
+  "gpt-luna":{name:"GPT-5.6 Luna",provider:"OpenAI",deploy:["api","managed"],why:"Cost-sensitive, high-volume option for routing, extraction, support, and routine multimodal work.",url:"https://developers.openai.com/api/docs/models"},
+  "claude-fable":{name:"Claude Fable 5",provider:"Anthropic",deploy:["api","managed"],why:"Highest-capability Claude option for long-running agents and the hardest enterprise workflows.",url:"https://platform.claude.com/docs/en/about-claude/models/overview"},
+  "claude-opus":{name:"Claude Opus 4.8",provider:"Anthropic",deploy:["api","managed"],why:"Strong fit for complex agentic coding and enterprise work where deliberation quality dominates latency.",url:"https://platform.claude.com/docs/en/about-claude/models/overview"},
+  "claude-sonnet":{name:"Claude Sonnet 5",provider:"Anthropic",deploy:["api","managed"],why:"Practical speed-intelligence balance for production assistants, coding, and tool-using systems.",url:"https://platform.claude.com/docs/en/about-claude/models/overview"},
+  "claude-haiku":{name:"Claude Haiku 4.5",provider:"Anthropic",deploy:["api","managed"],why:"Fast Claude option for high-frequency classification, routing, extraction, and lightweight agents.",url:"https://platform.claude.com/docs/en/about-claude/models/overview"},
+  "gemini-pro":{name:"Gemini 3.1 Pro Preview",provider:"Google",deploy:["api","managed"],why:"Long-context multimodal reasoning with strong tool support; use the pinned production-appropriate version available to you.",url:"https://ai.google.dev/gemini-api/docs/models"},
+  "gemini-flash":{name:"Gemini 3.5 Flash",provider:"Google",deploy:["api","managed"],why:"Fast multimodal model designed for agentic loops, large-context work, and production price-performance.",url:"https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"},
+  "gemini-lite":{name:"Gemini 3.1 Flash-Lite",provider:"Google",deploy:["api","managed"],why:"Low-latency, cost-efficient multimodal option for high-volume extraction and straightforward workflows.",url:"https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite"},
+  "mistral-medium":{name:"Mistral Medium 3.5",provider:"Mistral AI",deploy:["api","managed","self"],why:"Open frontier-class multimodal model optimized for agentic and coding use cases.",url:"https://docs.mistral.ai/models/overview"},
+  "mistral-small":{name:"Mistral Small 4",provider:"Mistral AI",deploy:["api","managed","self"],why:"Efficient hybrid model combining instruction following, reasoning, and coding for controlled deployments.",url:"https://docs.mistral.ai/models/overview"},
+  "devstral":{name:"Devstral 2",provider:"Mistral AI",deploy:["api","managed","self"],why:"Specialist off-the-shelf choice for software-engineering agents and repository work.",url:"https://docs.mistral.ai/models/overview"},
+  "llama-scout":{name:"Llama 4 Scout",provider:"Meta",deploy:["managed","self"],why:"Open-weight multimodal model with exceptionally long context and comparatively efficient single-server deployment.",url:"https://www.llama.com/models/llama-4/"},
+  "llama-maverick":{name:"Llama 4 Maverick",provider:"Meta",deploy:["managed","self"],why:"Stronger open-weight multimodal option when you control serving infrastructure and need more capability.",url:"https://www.llama.com/models/llama-4/"},
+  "command-aplus":{name:"Command A+",provider:"Cohere",deploy:["api","managed","self"],why:"Enterprise-oriented mixture-of-experts model combining vision, agents, reasoning, retrieval, and translation.",url:"https://docs.cohere.com/docs/models"},
+  "command-a":{name:"Command A",provider:"Cohere",deploy:["api","managed","self"],why:"Purpose-built for enterprise tool use, agents, multilingual workflows, and retrieval-augmented generation.",url:"https://docs.cohere.com/docs/models"},
+  "cohere-rerank":{name:"Cohere Rerank",provider:"Cohere",deploy:["api","managed"],why:"Specialist reranker that improves which retrieved passages reach a generation model.",url:"https://docs.cohere.com/docs/models"},
+  "cohere-embed":{name:"Cohere Embed",provider:"Cohere",deploy:["api","managed"],why:"Specialist embedding layer for semantic search, clustering, and retrieval systems.",url:"https://docs.cohere.com/docs/models"},
+  "gemini-image":{name:"Gemini 3.1 Flash Image",provider:"Google",deploy:["api","managed"],why:"High-efficiency image generation and conversational editing for mainstream production use.",url:"https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-image"},
+  "gemini-video":{name:"Gemini Omni Flash",provider:"Google",deploy:["api","managed"],why:"Conversational video generation and editing; currently a preview path rather than a conservative production default.",url:"https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash"},
+  "openai-realtime":{name:"OpenAI Realtime API",provider:"OpenAI",deploy:["api","managed"],why:"Hosted low-latency speech and multimodal interaction path when fast conversational turn-taking matters.",url:"https://developers.openai.com/api/docs/guides/realtime"},
+  "voxtral":{name:"Voxtral",provider:"Mistral AI",deploy:["api","managed","self"],why:"Specialist speech stack for transcription and voice workflows, including deployable options.",url:"https://docs.mistral.ai/models/overview"},
+  "local-open":{name:"Quantized small open-weight model",provider:"Llama / Mistral ecosystem",deploy:["local","self"],why:"Best starting point when data must remain on-device; benchmark carefully because hardware limits context, speed, and capability.",url:"https://www.llama.com/"},
+  "xgboost":{name:"Gradient-boosted trees",provider:"XGBoost / LightGBM",deploy:["api","managed","self","local"],why:"Often the strongest first baseline for structured tabular prediction, with lower cost and greater interpretability than an LLM.",url:"https://xgboost.readthedocs.io/"},
+  "sklearn":{name:"Linear or tree baseline",provider:"scikit-learn",deploy:["api","managed","self","local"],why:"Fast, auditable baseline for classification and regression; use it to prove that a more complex model is actually necessary.",url:"https://scikit-learn.org/stable/"}
+};
+function builderPattern(a){
+  const map={
+    assistant:["Retrieval-grounded assistant","A general model answers from a governed knowledge layer, cites evidence, and falls back when retrieval is weak."],
+    agent:["Controlled tool-using agent","A reasoning model plans within a bounded loop, calls typed tools, observes results, and requires approval for consequential actions."],
+    extraction:["Constrained extraction pipeline","A fast model converts text or images into a strict schema, validates fields, and escalates ambiguous cases."],
+    coding:["Repository-aware coding system","A coding-capable model combines repository retrieval, tool calls, tests, and human review rather than generating code in isolation."],
+    vision:["Multimodal evidence system","A vision-language model parses pages and images, preserves layout context, and grounds outputs in extracted evidence."],
+    voice:["Realtime speech agent","Streaming speech recognition, a conversational reasoning layer, tools, and speech synthesis operate under a tight latency budget."],
+    media:["Generative media workflow","A specialist generation model is wrapped with prompt controls, reference assets, moderation, provenance, and iterative editing."],
+    predictive:["Supervised predictive model","A labeled historical dataset feeds a transparent baseline, feature pipeline, validation regime, and monitored production scorer."]
+  };return map[a.goal];
+}
+function builderModelIds(a){
+  let ids=[];
+  if(a.goal==="predictive") ids=["xgboost","sklearn"];
+  else if(a.goal==="media") ids=a.priority==="volume"?["gemini-image","gemini-video"]:["gemini-image","gemini-video","gpt-terra"];
+  else if(a.goal==="voice") ids=a.deployment==="self"?["voxtral","mistral-small","command-a"]:["openai-realtime","voxtral","gemini-flash"];
+  else if(a.goal==="coding") ids=a.priority==="capability"?["claude-opus","gpt-sol","devstral"]:a.priority==="volume"?["devstral","mistral-small","gpt-luna"]:["claude-sonnet","gpt-terra","devstral"];
+  else if(a.goal==="agent") ids=a.priority==="capability"?["claude-fable","gpt-sol","claude-opus"]:a.priority==="volume"?["gemini-lite","gpt-luna","claude-haiku"]:["claude-sonnet","gpt-terra","gemini-flash"];
+  else if(a.goal==="extraction") ids=a.priority==="capability"?["gemini-pro","gpt-sol","command-aplus"]:a.priority==="volume"?["gemini-lite","gpt-luna","claude-haiku"]:["gemini-flash","gpt-terra","mistral-small"];
+  else if(a.goal==="vision") ids=a.priority==="capability"?["gemini-pro","gpt-sol","llama-maverick"]:a.priority==="volume"?["gemini-lite","gpt-luna","llama-scout"]:["gemini-flash","gpt-terra","llama-scout"];
+  else ids=a.priority==="capability"?["claude-fable","gpt-sol","gemini-pro"]:a.priority==="volume"?["gemini-lite","gpt-luna","claude-haiku"]:["gpt-terra","claude-sonnet","gemini-flash","command-aplus"];
+  if(["self","local"].includes(a.deployment)){
+    ids=ids.filter(id=>MODEL_CATALOG[id]?.deploy.includes(a.deployment));
+    const fallback=a.deployment==="local"?["local-open"]:(a.goal==="coding"?["devstral","mistral-medium","mistral-small"]:["command-aplus","mistral-medium","llama-maverick","llama-scout"]);
+    ids=[...ids,...fallback];
+  }else ids=ids.filter(id=>MODEL_CATALOG[id]?.deploy.includes(a.deployment)||MODEL_CATALOG[id]?.deploy.includes("api"));
+  if(a.data==="regulated"&&a.deployment==="api") ids.unshift("command-aplus");
+  return [...new Set(ids)].map(id=>MODEL_CATALOG[id]).filter(Boolean).slice(0,3);
+}
+function builderArchitecture(a){
+  if(a.goal==="predictive")return [["Input","Validated features","Dataset"],["Transform","Versioned feature pipeline","Feature engineering"],["Model","Boosted trees + baseline","Supervised learning"],["Decision","Thresholds and explanation","Evaluation"],["Monitor","Drift and calibration","Model monitoring"]];
+  const first=a.goal==="voice"?["Stream","Audio in / turn detection","Speech recognition"]:a.goal==="media"?["Brief","Prompt + reference assets","Prompt engineering"]:["Input","User request + permissions","Input validation"];
+  const middle=a.customization==="rag"?["Retrieve","Search, filter, rerank","Retrieval-augmented generation"]:a.customization==="finetune"?["Adapt","Fine-tuned behavior or adapter","Fine-tuning"]:a.customization==="scratch"?["Train","Curated corpus + distributed run","Pretraining"]:["Context","Instructions, examples, schema","Prompt engineering"];
+  const model=a.goal==="agent"?["Reason","Plan within a bounded loop","Agent"]:a.goal==="vision"||a.goal==="extraction"?["Interpret","Multimodal model + schema","Multimodal model"]:a.goal==="coding"?["Generate","Repository-aware coding model","Code generation"]:a.goal==="media"?["Generate","Specialist image / video model","Diffusion model"]:a.goal==="voice"?["Reason","Low-latency conversational model","Realtime inference"]:["Generate","Selected foundation model","Inference"];
+  const action=a.goal==="agent"||a.goal==="coding"?["Act","Typed tools, sandbox, approvals","Tool use"]:a.goal==="voice"?["Speak","Streaming synthesis","Speech synthesis"]:["Control","Grounding, validation, policy","Guardrail"];
+  return [first,middle,model,action,["Observe","Evals, traces, feedback, cost","Evaluation"]];
+}
+function builderComplexity(a){
+  let score={prompt:1,rag:2,finetune:3,scratch:5}[a.customization]+{prototype:0,team:1,production:2,massive:3}[a.scale]+(["self","local"].includes(a.deployment)?2:0)+(a.goal==="agent"?1:0);
+  return score<=3?["Moderate","A small product team can prototype this with managed components."]:score<=6?["Substantial","Plan for dedicated evaluation, data engineering, and production ownership."]:["Frontier-scale","This is a serious model and infrastructure program, not a normal application feature."];
+}
+function builderPlan(a){
+  const custom={prompt:"Prototype the task with prompts, examples, and strict output schemas before adding infrastructure.",rag:"Build retrieval separately, measure recall and ranking, then ground generation in the best passages.",finetune:"Create a clean supervised dataset, keep a frozen evaluation set, and compare the tuned model with the untuned base.",scratch:"Specify the research reason existing weights are inadequate, then plan data rights, compute, distributed training, safety, and post-training."}[a.customization];
+  const deploy={api:"Start with two hosted providers behind one internal interface so switching and evaluation remain possible.",managed:"Use a pinned model version, private networking where available, identity controls, and provider audit logs.",self:"Select serving hardware and an inference engine before committing to weights; model quality is only one part of total cost.",local:"Benchmark quantized candidates on the actual target device; memory, thermal limits, battery, and context length are product constraints."}[a.deployment];
+  return [
+    ["01","Define success","Write representative tasks, unacceptable failures, latency targets, and a human baseline."],
+    ["02","Benchmark options","Run the same frozen evaluation set across the recommended models; do not select from generic leaderboards alone."],
+    ["03","Build the evidence layer",a.data==="public"?"Document provenance and licenses even when the inputs are public.":a.data==="internal"?"Enforce permissions at retrieval time so the model never sees material the user cannot access.":"Add data classification, redaction, retention rules, auditability, and an approved deployment boundary."],
+    ["04","Customize minimally",custom],
+    ["05","Engineer deployment",deploy],
+    ["06","Operate and improve",a.scale==="prototype"?"Collect failure cases and user feedback before adding complexity.":"Trace requests, monitor quality and cost, version prompts and models, red-team the system, and maintain a rollback path."]
+  ];
+}
+function builderSummaryText(){
+  const a=state.builderAnswers,p=builderPattern(a),models=builderModelIds(a),complexity=builderComplexity(a);
+  return `${p[0]}\n\n${p[1]}\n\nRecommended options:\n${models.map((m,i)=>`${i+1}. ${m.name} — ${m.why}`).join("\n")}\n\nComplexity: ${complexity[0]} — ${complexity[1]}`;
+}
+function renderModelBuilder(){
+  const step=BUILDER_STEPS[state.builderStep],a=state.builderAnswers;
+  $("#builderSteps").innerHTML=`<h3 class="panel-title">Your decisions</h3>${BUILDER_STEPS.map((s,i)=>`<button class="builder-step ${i===state.builderStep?"active":""} ${a[s.id]?"done":""}" data-builder-step="${i}"><span class="builder-step-num">${a[s.id]?"✓":i+1}</span><span><strong>${esc(s.title.replace("What ","").replace("How ",""))}</strong><span>${a[s.id]?esc(s.choices.find(c=>c.id===a[s.id])?.label||""):"Choose an option"}</span></span></button>`).join("")}<button class="action" id="builderReset" style="width:100%;margin-top:10px">Start over</button>`;
+  $("#builderWizard").innerHTML=`<div class="builder-progress"><i style="width:${(state.builderStep+1)/BUILDER_STEPS.length*100}%"></i></div><div class="builder-question"><div class="builder-question-kicker">${esc(step.eyebrow)}</div><h3>${esc(step.title)}</h3><p>${esc(step.help)}</p><div class="builder-choice-grid">${step.choices.map(c=>`<button class="builder-choice ${a[step.id]===c.id?"active":""}" data-builder-choice="${c.id}"><span class="builder-choice-icon">${esc(c.icon)}</span><strong>${esc(c.label)}</strong><p>${esc(c.desc)}</p></button>`).join("")}</div></div><div class="builder-nav"><button class="action" id="builderPrev" ${state.builderStep===0?"disabled":""}>Previous</button><span class="mono">${state.builderStep+1} / ${BUILDER_STEPS.length}</span><button class="action primary" id="builderNext">${state.builderStep===BUILDER_STEPS.length-1?"Review blueprint":"Next decision"}</button></div>`;
+  $$("[data-builder-step]").forEach(b=>b.onclick=()=>{state.builderStep=Number(b.dataset.builderStep);renderModelBuilder()});
+  $$("[data-builder-choice]").forEach(b=>b.onclick=()=>{a[step.id]=b.dataset.builderChoice;renderModelBuilder()});
+  $("#builderPrev").onclick=()=>{if(state.builderStep>0){state.builderStep--;renderModelBuilder()}};
+  $("#builderNext").onclick=()=>{if(state.builderStep<BUILDER_STEPS.length-1){state.builderStep++;renderModelBuilder()}else{$("#builderBlueprint").scrollIntoView({behavior:"smooth",block:"start"});toast("Blueprint complete. Compare the recommended options on your own evaluation set.")}};
+  $("#builderReset").onclick=()=>{state.builderStep=0;state.builderAnswers={goal:"assistant",data:"internal",priority:"balanced",deployment:"api",customization:"rag",scale:"prototype"};renderModelBuilder()};
+  renderBuilderBlueprint();
+}
+function renderBuilderBlueprint(){
+  const a=state.builderAnswers,p=builderPattern(a),models=builderModelIds(a),complexity=builderComplexity(a),arch=builderArchitecture(a),plan=builderPlan(a);
+  const customLabel=BUILDER_STEPS.find(s=>s.id==="customization").choices.find(c=>c.id===a.customization).label;
+  $("#builderBlueprint").innerHTML=`<div class="inspector-kicker">Live blueprint</div><h3>${esc(p[0])}</h3><p>${esc(p[1])}</p><div class="blueprint-block"><div class="blueprint-label">Recommended build pattern</div><div class="blueprint-value"><strong>${esc(customLabel)}</strong><br>${a.customization==="scratch"?"Only proceed if the purpose is new model research or strategic ownership of weights—not simply a differentiated application.":"Begin with an existing base model and invest differentiation in data, workflow, evaluation, and product design."}</div></div><div class="blueprint-block"><div class="blueprint-label">Off-the-shelf shortlist</div><div class="model-picks">${models.map((m,i)=>`<div class="model-pick"><div class="model-pick-head"><strong>${i===0?"Primary · ":"Alternative · "}${esc(m.name)}</strong><span class="provider">${esc(m.provider)}</span></div><p>${esc(m.why)}</p><a href="${esc(m.url)}" target="_blank" rel="noopener">Official documentation ↗</a></div>`).join("")}</div></div><div class="blueprint-block"><div class="blueprint-label">Program complexity</div><div class="blueprint-value"><strong>${esc(complexity[0])}</strong><br>${esc(complexity[1])}</div></div><div class="blueprint-block"><div class="blueprint-label">Non-negotiables</div><div class="blueprint-list"><div>Use a frozen, representative evaluation set before selecting a vendor or base model.</div><div>${a.data==="regulated"?"Keep sensitive data inside an explicitly approved boundary and log every access path.":a.data==="internal"?"Carry source permissions into retrieval and generation; do not rely on the model to enforce access control.":"Record provenance, licenses, and consent for the data used."}</div><div>${a.goal==="agent"?"Constrain tools, sandbox execution, set budgets, and require approvals for consequential actions.":"Validate outputs before they trigger consequential decisions or downstream automation."}</div><div>Pin model versions, monitor regressions, and maintain a rollback or fallback route.</div></div></div><div class="blueprint-block"><button class="action" id="copyBlueprint">Copy blueprint</button></div>`;
+  $("#copyBlueprint").onclick=async()=>{try{await navigator.clipboard.writeText(builderSummaryText());toast("Blueprint copied.")}catch(e){toast("Copy was blocked by the browser.")}};
+  $("#builderArchitecture").innerHTML=`<div class="builder-architecture-head"><div><h3>Your system architecture</h3><p>Each stage links the product choice to a concept already mapped in the atlas.</p></div><div class="view-meta">${esc(a.deployment)} deployment · ${esc(a.scale)} scale</div></div><div class="builder-flow">${arch.map((st,i)=>`${i?'<div class="builder-flow-arrow">→</div>':""}<div class="builder-flow-stage"><span>0${i+1}</span><strong>${esc(st[0])}</strong><p>${esc(st[1])}</p>${byName.has(st[2])?`<button class="relation-item" data-builder-concept="${esc(st[2])}" style="margin-top:9px">${esc(st[2])}</button>`:""}</div>`).join("")}</div>`;
+  $$("[data-builder-concept]").forEach(b=>b.onclick=()=>{showView("explore");selectConcept(b.dataset.builderConcept)});
+  $("#builderPlan").innerHTML=plan.map(x=>`<article class="panel builder-plan-card"><span class="num">${x[0]}</span><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p></article>`).join("");
+}
+window.renderModelBuilder=renderModelBuilder;
+
 /* ---------- Debates ---------- */
 function renderDebates(){
   $("#debateMap").innerHTML=DATA.debates.map((d,i)=>`<article class="panel debate" data-debate="${i}"><h3>${esc(d.title)}</h3><div class="debate-sides"><div class="debate-side"><strong>${esc(d.left)}</strong><p>${esc(d.leftText)}</p></div><div class="debate-side"><strong>${esc(d.right)}</strong><p>${esc(d.rightText)}</p></div></div><div class="debate-question">Unresolved: ${esc(d.question)}</div></article>`).join("");
@@ -1041,7 +1289,7 @@ renderCategoryList();renderConceptInspector();setTimeout(renderGraph,0);
 renderLaneFilters();renderTimeline();
 renderGlobeFilters();renderPlaceSide();setTimeout(resizeGlobe,50);globeLoop();
 renderSchoolFilters();renderPeople();
-renderSystems();renderTokens();renderTemp();renderAttention();renderRag();renderCost();setTimeout(drawGradient,70);
+renderSystems();renderTokens();renderTemp();renderAttention();renderRag();renderCost();renderModelBuilder();setTimeout(drawGradient,70);
 renderDebates();renderTermFilters();renderGlossary();renderCompareTray();
 </script>
 </body>
