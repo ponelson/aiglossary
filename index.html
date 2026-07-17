@@ -299,6 +299,106 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
   .tour-body{grid-template-columns:1fr;padding:28px}.tour-year{font-size:34px}
   .compare-tray{overflow:auto;justify-content:flex-start}
 }
+
+/* ===== Power ladder ===== */
+.power-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+.power-ladder-panel{padding:20px 22px}
+.power-ladder{display:flex;flex-direction:column;gap:0}
+.rung{position:relative;padding:13px 0 15px;border-top:1px solid var(--line);cursor:pointer}
+.rung:first-child{border-top:0}
+.rung.active .rung-label strong{color:var(--blue)}
+.rung-top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:8px}
+.rung-label{display:flex;align-items:baseline;gap:9px;min-width:0}
+.rung-label .rn{font:500 11px "JetBrains Mono",monospace;color:var(--quiet);width:20px;flex:none}
+.rung-label strong{font:500 16px "Source Serif 4",serif;letter-spacing:-.01em}
+.rung-label .rung-sub{font-size:11.5px;color:var(--quiet);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rung-val{font:500 13px "JetBrains Mono",monospace;color:var(--ink);white-space:nowrap;flex:none}
+.rung-bar-track{height:12px;border-radius:999px;background:var(--paper2);overflow:hidden;position:relative}
+.rung-bar{height:100%;border-radius:999px;background:linear-gradient(90deg,color-mix(in srgb,var(--blue) 55%,transparent),var(--blue));min-width:5px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.rung.hot .rung-bar{background:linear-gradient(90deg,color-mix(in srgb,var(--orange) 55%,transparent),var(--orange))}
+.rung.max .rung-bar{background:linear-gradient(90deg,color-mix(in srgb,var(--red) 55%,transparent),var(--red))}
+.rung-mult{position:absolute;right:0;top:-9px;font:500 10px "JetBrains Mono",monospace;color:var(--quiet);background:var(--paper);padding:0 5px}
+.power-inspector{padding:20px 20px 22px;position:sticky;top:78px}
+.power-inspector .pi-kicker{font:500 10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:8px}
+.power-inspector h3{font:500 24px "Source Serif 4",serif;letter-spacing:-.02em;margin:0 0 4px}
+.power-inspector .pi-big{font:500 30px "Source Serif 4",serif;color:var(--ink);letter-spacing:-.02em;margin:8px 0 2px}
+.power-inspector .pi-big span{font-size:14px;color:var(--quiet);font-family:"JetBrains Mono",monospace}
+.power-inspector .pi-body{font-size:13.5px;color:var(--muted);line-height:1.62;margin:12px 0 0}
+.pi-compare{margin-top:14px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--paper2);font-size:12.5px;color:var(--ink);line-height:1.55}
+.pi-compare b{color:var(--blue)}
+.pi-source{margin-top:12px;font:11px "JetBrains Mono",monospace;color:var(--quiet);line-height:1.5}
+.power-atom{margin-top:14px;padding:14px 16px;border:1px dashed var(--line2);border-radius:12px;display:flex;gap:13px;align-items:flex-start}
+.power-atom .pa-dot{width:9px;height:9px;border-radius:50%;background:var(--green);margin-top:5px;flex:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--green) 18%,transparent)}
+.power-atom h4{margin:0 0 3px;font:500 13px/1.3 Inter,sans-serif}
+.power-atom p{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+.power-map-panel{margin-top:16px;padding:20px 22px}
+.power-map-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:6px}
+.power-map-sub{font-size:12.5px;color:var(--muted);margin:4px 0 0;max-width:560px}
+.power-map-wrap{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper2)}
+#powerMap{width:100%;height:auto;display:block}
+.pm-land{fill:color-mix(in srgb,var(--ink) 7%,transparent);stroke:var(--line2);stroke-width:.6}
+.pm-grid{stroke:var(--line);stroke-width:.5;fill:none}
+.pm-region{font:500 9px "JetBrains Mono",monospace;fill:var(--quiet);letter-spacing:.06em;text-transform:uppercase}
+.pm-hub{cursor:pointer}
+.pm-hub circle{transition:transform .18s ease}
+.pm-hub:hover circle.core{stroke:var(--ink);stroke-width:1.4}
+.pm-hub text{font:500 9.5px Inter,sans-serif;fill:var(--ink);pointer-events:none}
+.pm-tip{font:500 11px Inter,sans-serif}
+.power-map-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;font-size:11.5px;color:var(--muted)}
+.power-map-legend .lg{display:flex;align-items:center;gap:6px}
+.power-map-legend .lg i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* ===== Silicon supply chain ===== */
+.si-flow{display:flex;gap:0;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:thin}
+.si-stage{min-width:172px;flex:1 1 0;display:flex;flex-direction:column}
+.si-stage-head{display:flex;align-items:baseline;gap:7px;padding:0 4px 10px}
+.si-stage-head .sn{font:500 11px "JetBrains Mono",monospace;color:var(--blue)}
+.si-stage-head h4{margin:0;font:500 14px "Source Serif 4",serif;letter-spacing:-.01em}
+.si-nodes{display:flex;flex-direction:column;gap:8px;position:relative;padding:0 4px}
+.si-stage:not(:last-child) .si-nodes:after{content:"→";position:absolute;right:-11px;top:22px;color:var(--line2);font-size:15px;z-index:2}
+.si-node{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:11px 12px;cursor:pointer;transition:border-color .16s ease,transform .16s ease}
+.si-node:hover{border-color:var(--line2);transform:translateY(-1px)}
+.si-node.active{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 14%,transparent)}
+.si-node strong{display:block;font:500 13px/1.2 Inter,sans-serif}
+.si-node span{display:block;font-size:11px;color:var(--quiet);margin-top:3px}
+.si-node .si-tag{display:inline-block;margin-top:7px;font:500 9px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:999px;border:1px solid var(--line)}
+.si-tag.choke{color:var(--red);border-color:color-mix(in srgb,var(--red) 45%,var(--line))}
+.si-tag.dom{color:var(--orange);border-color:color-mix(in srgb,var(--orange) 45%,var(--line))}
+.si-tag.key{color:var(--violet);border-color:color-mix(in srgb,var(--violet) 45%,var(--line))}
+.si-inspector{margin-top:16px;padding:20px 22px;display:grid;grid-template-columns:1.2fr 1fr;gap:26px}
+.si-inspector .sii-kicker{font:500 10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:7px}
+.si-inspector h3{font:500 26px "Source Serif 4",serif;letter-spacing:-.02em;margin:0 0 3px}
+.si-inspector .sii-where{font:500 12px "JetBrains Mono",monospace;color:var(--quiet);margin-bottom:12px}
+.si-inspector .sii-body{font-size:13.5px;color:var(--muted);line-height:1.65}
+.si-facts{border-left:1px solid var(--line);padding-left:24px}
+.si-facts .sf{padding:9px 0;border-top:1px solid var(--line)}
+.si-facts .sf:first-child{border-top:0;padding-top:0}
+.si-facts .sf b{display:block;font:500 11px "JetBrains Mono",monospace;color:var(--quiet);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.si-facts .sf span{font-size:13px;color:var(--ink)}
+.si-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.si-feature{padding:22px 24px}
+.si-feature h3{font:500 22px "Source Serif 4",serif;letter-spacing:-.02em;margin:0 0 4px}
+.si-feature .sf-kicker{font:500 10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--orange);margin-bottom:10px}
+.si-feature p{font-size:13px;color:var(--muted);line-height:1.62;margin:0 0 11px}
+.si-feature p:last-child{margin-bottom:0}
+.si-feature b{color:var(--ink);font-weight:600}
+#euvDiagram{width:100%;height:auto;display:block;margin:6px 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--paper2)}
+.euv-lbl{font:500 9.5px "JetBrains Mono",monospace;fill:var(--muted)}
+.euv-part{font:500 10px Inter,sans-serif;fill:var(--ink)}
+.si-chokestrip{margin-top:16px;padding:20px 22px}
+.si-chokestrip .cs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:12px}
+.cs-item{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:var(--paper2)}
+.cs-item .cs-n{font:500 10px "JetBrains Mono",monospace;color:var(--red);letter-spacing:.05em}
+.cs-item strong{display:block;font:500 14px/1.3 Inter,sans-serif;margin:4px 0 4px}
+.cs-item p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+
+@media(max-width:940px){
+  .power-layout{grid-template-columns:1fr}
+  .power-inspector{position:static}
+  .si-inspector{grid-template-columns:1fr}
+  .si-facts{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:16px}
+  .si-features{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -312,6 +412,8 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       <button class="nav-btn" data-view="globe">Globe</button>
       <button class="nav-btn" data-view="people">People</button>
       <button class="nav-btn" data-view="systems">Systems</button>
+      <button class="nav-btn" data-view="power">Power</button>
+      <button class="nav-btn" data-view="silicon">Silicon</button>
       <button class="nav-btn" data-view="builder">Build a Model</button>
       <button class="nav-btn" data-view="debates">Debates</button>
       <button class="nav-btn" data-view="glossary">Glossary</button>
@@ -535,6 +637,43 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
       <div class="glossary-grid" id="glossaryGrid"></div>
       <button class="action load-more" id="loadMore">Show more</button>
+    </section>
+
+    <section class="view" id="view-power">
+      <div class="view-head">
+        <div><h2>The power ladder</h2><p>From a single AI answer to the entire planet's electricity, on one logarithmic axis. Each rung draws very roughly ten to a thousand times the one beneath it. Select any rung for the number — and the source — behind it.</p></div>
+        <div class="view-meta">Average continuous power · log scale</div>
+      </div>
+      <div class="power-layout">
+        <div class="panel power-ladder-panel"><div class="power-ladder" id="powerLadder"></div></div>
+        <aside class="panel power-inspector" id="powerInspector"></aside>
+      </div>
+      <div class="panel power-map-panel">
+        <div class="power-map-head">
+          <div><h3 class="panel-title">Where the demand lands</h3><p class="power-map-sub">The largest concentrations of data-center power on Earth. Marker area scales with cluster size; the United States alone is about 45% of global data-center electricity.</p></div>
+          <div class="view-meta" id="powerMapMeta"></div>
+        </div>
+        <div class="power-map-wrap"><svg id="powerMap" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" aria-label="World map of data-center hubs"></svg></div>
+        <div class="power-map-legend" id="powerMapLegend"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-silicon">
+      <div class="view-head">
+        <div><h2>How a chip is made</h2><p>Every AI accelerator is the output of the most concentrated supply chain on Earth — from the world's purest quartz to a machine that fires lasers at falling tin. Follow it left to right; click any link for what it does and why it can't easily be replaced.</p></div>
+        <div class="view-meta">Raw rock → reasoning engine</div>
+      </div>
+      <div class="panel" style="padding:20px 20px 8px"><div class="si-flow" id="siFlow"></div></div>
+      <div class="panel si-inspector" id="siInspector"></div>
+      <div class="si-features">
+        <article class="panel si-feature" id="euvFeature"></article>
+        <article class="panel si-feature" id="spruceFeature"></article>
+      </div>
+      <div class="panel si-chokestrip">
+        <h3 class="panel-title">Single points of failure</h3>
+        <p class="power-map-sub">Places where one company, one machine, or one town has no real substitute — the reason the chip supply chain is also a geopolitical map.</p>
+        <div class="cs-grid" id="siChokes"></div>
+      </div>
     </section>
   </div>
 </main>
@@ -1291,6 +1430,271 @@ renderGlobeFilters();renderPlaceSide();setTimeout(resizeGlobe,50);globeLoop();
 renderSchoolFilters();renderPeople();
 renderSystems();renderTokens();renderTemp();renderAttention();renderRag();renderCost();renderModelBuilder();setTimeout(drawGradient,70);
 renderDebates();renderTermFilters();renderGlossary();renderCompareTray();
+
+/* ================= POWER LADDER ================= */
+const POWER_RUNGS=[
+ {name:"A laptop, working",sub:"the device in your hands",w:50,disp:"≈50 W",cls:"",
+  body:"A laptop under load draws roughly 50 watts — likely the very thing you're reading this on. Every rung above is, in the end, built out of millions of copies of about this much.",
+  compare:'Roughly <b>one ten-thousandth</b> of a single AI training rack.',
+  src:"Typical laptop power draw under load."},
+ {name:"A New York apartment",sub:"averaged over a year",w:500,disp:"≈0.5 kW",cls:"",
+  body:"Averaged across a full year, a New York apartment pulls on the order of half a kilowatt continuously — very roughly 4,000–5,000 kWh a year — though it spikes far higher when the air conditioner and the oven run at once.",
+  compare:'About <b>ten laptops</b> running non-stop.',
+  src:"Order-of-magnitude from NYC residential averages."},
+ {name:"An AI server",sub:"eight H100 GPUs",w:10000,disp:"≈10 kW",cls:"",
+  body:"An eight-GPU AI server — an NVIDIA DGX-class box — is the basic unit of modern training. Each H100 GPU alone draws about 700 watts; the whole server lands near 10 kW, the heat of a packed server closet.",
+  compare:'Roughly <b>20 apartments</b> of power in one chassis.',
+  src:"NVIDIA HGX/DGX H100 — ~700 W per GPU, ~10 kW per 8-GPU server."},
+ {name:"An AI rack",sub:"NVIDIA GB200 NVL72",w:130000,disp:"≈130 kW",cls:"hot",
+  body:"Pack that density into a single rack and you get NVIDIA's GB200 NVL72 — 72 Blackwell GPUs wired into one machine drawing 120–132 kW. A legacy CPU rack is about 12 kW; this is ten times denser and must be liquid-cooled just to survive.",
+  compare:'One rack ≈ <b>260 New York apartments</b>.',
+  src:"HPE / NVIDIA GB200 NVL72: ~120–132 kW per rack."},
+ {name:"A city block",sub:"dense mixed-use Manhattan",w:1500000,disp:"≈1.5 MW",cls:"",
+  body:"A dense mixed-use Manhattan block — apartments, shops, offices, elevators — runs on the order of one to two megawatts. This is the rung where \u201Ccomputer\u201D and \u201Cneighborhood\u201D quietly start to trade places.",
+  compare:'About <b>a dozen AI racks</b> — or one city block.',
+  src:"Illustrative order-of-magnitude estimate."},
+ {name:"A large AI data center",sub:"one hyperscale campus",w:200000000,disp:"≈200 MW",cls:"hot",
+  body:"A large AI campus today runs at 100–300 MW. The frontier is moving fast: \u201Cgigawatt-class\u201D sites (Stargate-class, ~1,000 MW) are now being planned — a single building rivaling a nuclear reactor's output.",
+  compare:'A 200 MW site is <b>a small city\u2019s worth</b> of continuous power, in one building.',
+  src:"IEEE / industry reporting; 1 GW-class facilities (Stargate) now planned."},
+ {name:"New York City",sub:"all five boroughs",w:5900000000,disp:"≈5.9 GW avg",cls:"",
+  body:"All five boroughs together average around 5–6 GW, swinging from ~5.5 GW on a mild day to ~11 GW in a July heatwave — about 52 TWh a year. For scale: Greater London runs near 40 TWh a year, and Tokyo's core sits in a similar band while its full grid (TEPCO, ~45 million people) is several times larger.",
+  compare:'A single big AI data center is already <b>a few percent</b> of a city this size.',
+  src:"NYC \u224852 TWh/yr (Con Edison / NYISO); London \u224839.6 TWh/yr (GLA)."},
+ {name:"Every data center on Earth",sub:"AI and everything else",w:47000000000,disp:"≈47 GW avg",cls:"hot",
+  body:"Every data center on the planet — AI and everything else — used about 415 TWh in 2024, roughly 1.5% of world electricity, an average draw near 47 GW. The IEA projects that roughly doubles to ~945 TWh by 2030, with the US and China driving nearly 80% of the growth.",
+  compare:'By 2030 the world\u2019s data centers approach <b>Japan\u2019s entire electricity use</b>.',
+  src:"IEA, Energy & AI (2025): 415 TWh in 2024 \u2192 ~945 TWh by 2030."},
+ {name:"All of humanity's electricity",sub:"the whole planet, 2024",w:3400000000000,disp:"≈3.4 TW avg",cls:"max",
+  body:"Humanity's total electricity crossed 30,000 TWh for the first time in 2024 — an average, around-the-clock draw of about 3.4 terawatts. Data centers are ~1.5% of it today; the entire ladder below fits comfortably inside this single bar.",
+  compare:'The top rung is <b>~70\u00D7</b> all the world\u2019s data centers combined.',
+  src:"IEA / Ember Global Electricity Review 2025 (~30,000 TWh, 2024)."}
+];
+const AXMIN=Math.log10(30), AXMAX=Math.log10(5e12);
+function barPct(w){return Math.max(4,Math.min(100,(Math.log10(w)-AXMIN)/(AXMAX-AXMIN)*100))}
+function fmtMult(r){r=Math.round(r);return r>=1000?"\u00D7"+r.toLocaleString():"\u00D7"+r}
+let powerSel=3;
+function renderPower(){
+  const lad=$("#powerLadder");
+  lad.innerHTML=POWER_RUNGS.map((r,i)=>{
+    const mult=i>0?`<span class="rung-mult">${fmtMult(r.w/POWER_RUNGS[i-1].w)} the rung above</span>`:"";
+    return `<div class="rung ${r.cls} ${i===powerSel?"active":""}" data-rung="${i}">
+      <div class="rung-top">
+        <span class="rung-label"><span class="rn">0${i+1}</span><strong>${esc(r.name)}</strong><span class="rung-sub">${esc(r.sub)}</span></span>
+        <span class="rung-val">${r.disp}</span>
+      </div>
+      <div class="rung-bar-track"><div class="rung-bar" style="width:${barPct(r.w)}%"></div>${mult}</div>
+    </div>`;
+  }).join("")+
+  `<div class="power-atom"><span class="pa-dot"></span><div>
+     <h4>The atom of demand: one AI answer \u2248 0.3 Wh</h4>
+     <p>The whole ladder is built from a single unit. One text query to a model uses roughly 0.3 watt-hours — OpenAI and Epoch AI both land near 0.3\u20130.34 Wh for a GPT-4o-class reply, about nine seconds of a microwave. A heavy reasoning query can run 20\u201340\u00D7 that. Multiply by billions of queries a day and you climb the entire ladder.</p>
+   </div></div>`;
+  $$("[data-rung]").forEach(el=>el.onclick=()=>{powerSel=+el.dataset.rung;$$(".rung").forEach(x=>x.classList.remove("active"));el.classList.add("active");renderPowerInspector();});
+  renderPowerInspector();
+  drawPowerMap();
+}
+function renderPowerInspector(){
+  const r=POWER_RUNGS[powerSel];
+  $("#powerInspector").innerHTML=`<div class="pi-kicker">Rung 0${powerSel+1} of ${POWER_RUNGS.length}</div>
+    <h3>${esc(r.name)}</h3>
+    <div class="pi-big">${r.disp}</div>
+    <p class="pi-body">${r.body}</p>
+    <div class="pi-compare">${r.compare}</div>
+    <div class="pi-source">Source \u00B7 ${esc(r.src)}</div>`;
+}
+const POWER_HUBS=[
+ {name:"Northern Virginia",lon:-77.5,lat:39.0,size:4,status:"Largest cluster",note:"Loudoun County's \u201CData Center Alley\u201D \u2014 the densest data-center region on Earth."},
+ {name:"Abilene, TX",lon:-99.7,lat:32.4,size:3,status:"Emerging AI campus",note:"Site of the flagship Stargate gigawatt-class AI build-out."},
+ {name:"Phoenix",lon:-112.0,lat:33.4,size:3,status:"Established hub",note:"A fast-growing Southwest cluster."},
+ {name:"Dallas",lon:-96.8,lat:32.8,size:3,status:"Established hub",note:"Major Texas interconnection point."},
+ {name:"Silicon Valley",lon:-121.95,lat:37.35,size:2,status:"Established hub",note:"Santa Clara / Bay Area core."},
+ {name:"Chicago",lon:-87.6,lat:41.9,size:2,status:"Established hub",note:"Central US network hub."},
+ {name:"Dublin",lon:-6.3,lat:53.3,size:3,status:"Established hub",note:"Europe's data-center capital; roughly a fifth of Ireland's electricity."},
+ {name:"London",lon:-0.1,lat:51.5,size:3,status:"Established hub",note:"The \u201CL\u201D in Europe's FLAP-D core."},
+ {name:"Amsterdam",lon:4.9,lat:52.4,size:2,status:"Established hub",note:"Major European interconnect."},
+ {name:"Frankfurt",lon:8.7,lat:50.1,size:3,status:"Established hub",note:"Home to one of the world's largest internet exchanges."},
+ {name:"Beijing / Zhangjiakou",lon:116.0,lat:40.3,size:3,status:"Largest cluster",note:"Anchor of China's northern data-center build-out."},
+ {name:"Tokyo",lon:139.7,lat:35.7,size:3,status:"Established hub",note:"Asia-Pacific hub on the TEPCO grid."},
+ {name:"Singapore",lon:103.8,lat:1.35,size:3,status:"Established hub",note:"Southeast Asia's gateway; land and power constrained."},
+ {name:"Mumbai",lon:72.9,lat:19.1,size:2,status:"Emerging AI campus",note:"India's fastest-growing cluster."},
+ {name:"S\u00E3o Paulo",lon:-46.6,lat:-23.5,size:2,status:"Established hub",note:"Largest Latin American hub."}
+];
+const CONTINENTS=[
+ [[-168,66],[-95,71],[-82,63],[-64,60],[-56,52],[-52,47],[-66,45],[-70,41],[-74,40],[-81,31],[-80,25],[-97,26],[-107,23],[-114,29],[-124,40],[-125,48],[-135,58],[-153,59],[-166,65]],
+ [[-81,8],[-77,1],[-80,-4],[-71,-18],[-70,-30],[-73,-42],[-75,-50],[-68,-55],[-64,-52],[-58,-40],[-48,-25],[-40,-20],[-35,-8],[-50,0],[-60,6],[-77,8]],
+ [[-17,15],[-16,21],[10,32],[24,32],[32,31],[43,12],[51,12],[48,2],[40,-5],[40,-16],[35,-24],[26,-34],[18,-34],[12,-17],[9,4],[-8,5],[-17,15]],
+ [[-10,36],[-9,44],[-4,48],[2,51],[-5,58],[5,62],[10,58],[13,55],[20,55],[30,60],[40,52],[40,46],[28,41],[24,40],[15,40],[18,45],[13,45],[8,44],[3,43],[-2,36]],
+ [[40,46],[50,45],[48,30],[57,25],[67,25],[70,20],[77,8],[80,10],[90,22],[97,16],[100,7],[104,1],[110,2],[105,10],[109,21],[122,30],[122,40],[130,43],[142,46],[135,35],[140,52],[160,60],[180,66],[168,71],[100,78],[70,73],[60,68],[45,66],[40,60]],
+ [[114,-22],[122,-18],[130,-12],[137,-12],[142,-11],[146,-18],[153,-28],[150,-38],[141,-38],[131,-32],[123,-34],[115,-34]]
+];
+const HUBCOLOR={"Largest cluster":"var(--red)","Established hub":"var(--blue)","Emerging AI campus":"var(--green)"};
+function PX(lon){return (lon+180)/360*1000}
+function PY(lat){return (90-lat)/180*500}
+function drawPowerMap(){
+  const svg=$("#powerMap");if(!svg)return;
+  let s="";
+  // graticule
+  for(let lon=-150;lon<=150;lon+=30){s+=`<line class="pm-grid" x1="${PX(lon)}" y1="0" x2="${PX(lon)}" y2="500"/>`;}
+  for(let lat=-60;lat<=60;lat+=30){s+=`<line class="pm-grid" x1="0" y1="${PY(lat)}" x2="1000" y2="${PY(lat)}"/>`;}
+  // continents
+  CONTINENTS.forEach(poly=>{s+=`<path class="pm-land" d="M${poly.map(p=>PX(p[0]).toFixed(1)+" "+PY(p[1]).toFixed(1)).join(" L")} Z"/>`;});
+  // region labels
+  [["N. America",250,112],["S. America",345,335],["Europe",520,70],["Africa",545,255],["Asia",790,105],["Oceania",862,362]].forEach(l=>{s+=`<text class="pm-region" x="${l[1]}" y="${l[2]}" text-anchor="middle">${l[0]}</text>`;});
+  // hubs (largest first so small draw on top)
+  POWER_HUBS.slice().sort((a,b)=>b.size-a.size).forEach(h=>{
+    const x=PX(h.lon),y=PY(h.lat),r=3+h.size*2.4,c=HUBCOLOR[h.status];
+    const label=h.size>=3?`<text x="${x}" y="${(y-r-4).toFixed(1)}" text-anchor="middle">${esc(h.name)}</text>`:"";
+    s+=`<g class="pm-hub"><title>${esc(h.name)} \u2014 ${esc(h.status)}. ${esc(h.note)}</title>
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(r+5).toFixed(1)}" fill="${c}" opacity="0.14"/>
+      <circle class="core" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${c}" opacity="0.9"/>
+      ${label}</g>`;
+  });
+  svg.innerHTML=s;
+  $("#powerMapMeta").textContent="415 TWh in 2024 \u00B7 ~1.5% of world electricity";
+  $("#powerMapLegend").innerHTML=[["Largest cluster","var(--red)"],["Established hub","var(--blue)"],["Emerging AI campus","var(--green)"]]
+    .map(l=>`<span class="lg"><i style="background:${l[1]}"></i>${l[0]}</span>`).join("")+
+    `<span class="lg" style="color:var(--quiet)">Hover a marker for detail \u00B7 equirectangular projection</span>`;
+}
+
+/* ================= SILICON SUPPLY CHAIN ================= */
+const SI_STAGES=[
+ {n:"01",title:"Raw materials",nodes:[
+  {name:"Spruce Pine quartz",where:"North Carolina, USA",tag:"choke",tagl:"chokepoint",role:"World's purest natural quartz",
+   body:"A tiny town in the Blue Ridge Mountains holds the world's purest deposits of natural quartz. It isn't the silicon in the chip itself \u2014 it's melted into the ultra-pure fused-quartz crucibles and components that cradle molten silicon while a wafer crystal is grown, without contaminating it. Two firms, Sibelco and The Quartz Corp, mine it; when Hurricane Helene flooded the town in September 2024, the whole industry held its breath.",
+   facts:[["Role","Fused-quartz crucibles & consumables"],["Miners","Sibelco \u00B7 The Quartz Corp"],["Substitute","No proven equal at scale"]]},
+  {name:"Polysilicon",where:"China \u00B7 Germany \u00B7 USA",tag:"",tagl:"",role:"Electronic-grade silicon",
+   body:"Ordinary quartzite is refined into metallurgical silicon and then purified to electronic-grade polysilicon \u2014 about 99.9999999% pure, so-called \u201Cnine nines.\u201D This is the actual material the wafer is made of.",
+   facts:[["Purity","~99.9999999% (9N)"],["From","Refined quartzite"],["Into","Silicon ingots"]]},
+  {name:"Photoresist & gases",where:"Japan \u00B7 Ukraine",tag:"key",tagl:"specialty",role:"Coatings & ultra-pure gases",
+   body:"Chips are patterned with light-sensitive photoresist \u2014 largely a Japanese specialty (JSR, Tokyo Ohka, Shin-Etsu) \u2014 and etched with ultra-pure gases. Neon for the lithography lasers came heavily from Ukraine, a dependency the 2022 war exposed.",
+   facts:[["Photoresist","Japan-dominated"],["Neon","Ukraine exposure"],["Role","Pattern & etch chemistry"]]}
+ ]},
+ {n:"02",title:"Wafers",nodes:[
+  {name:"Shin-Etsu / SUMCO",where:"Japan",tag:"dom",tagl:"~50% share",role:"Silicon wafers",
+   body:"Two Japanese firms supply roughly half the world's silicon wafers between them. A 300mm wafer looks like a mirror and has to be flat almost to the atom before a single circuit is printed.",
+   facts:[["Share","~50% of wafers (2 firms)"],["Size","300 mm standard"],["Location","Japan"]]},
+  {name:"Czochralski growth",where:"the crystal pull",tag:"",tagl:"",role:"Growing one silicon crystal",
+   body:"A seed crystal is dipped into molten silicon \u2014 held in a Spruce Pine crucible \u2014 then slowly pulled and rotated, drawing up a single cylindrical crystal called an ingot, which is sliced into wafers thinner than a business card.",
+   facts:[["Method","Czochralski pulling"],["Output","Monocrystalline ingot"],["Depends on","Ultra-pure crucible"]]}
+ ]},
+ {n:"03",title:"The machines",nodes:[
+  {name:"ASML \u2014 EUV litho",where:"Veldhoven, Netherlands",tag:"choke",tagl:"sole supplier",role:"Prints the finest patterns",
+   body:"The single most important machine in the modern world \u2014 and only one company on Earth makes it. An EUV scanner costs roughly $180 million (the new High-NA version $380\u2013400M), weighs about 180 tons, has ~100,000 parts, and ships in three Boeing 747s. Below 7nm, no chip gets made without it.",
+   facts:[["Cost","~$180M \u00B7 High-NA ~$380\u2013400M"],["Suppliers","ASML \u2014 the only one"],["Light","13.5 nm EUV"]]},
+  {name:"Zeiss optics",where:"Germany",tag:"key",tagl:"single source",role:"The flattest mirrors made",
+   body:"EUV light bounces off mirrors so smooth that, scaled up to the size of Germany, the largest bump would be under a millimeter. Only Zeiss can make them \u2014 because EUV is absorbed by everything, so the optics must reflect rather than refract.",
+   facts:[["Maker","Carl Zeiss SMT"],["Why mirrors","EUV can't pass through lenses"],["Precision","Sub-nm flatness"]]},
+  {name:"Applied \u00B7 Lam \u00B7 KLA",where:"United States",tag:"dom",tagl:"deposition\u00B7etch\u00B7metrology",role:"Builds & measures each layer",
+   body:"Between lithography steps, dozens of other machines deposit films atom-by-atom, etch them away, and inspect for defects. US firms dominate these steps \u2014 which is exactly why US export controls bite so hard.",
+   facts:[["Deposition/etch","Applied Materials, Lam"],["Metrology","KLA"],["Leverage","US export controls"]]},
+  {name:"Tokyo Electron",where:"Japan",tag:"",tagl:"",role:"Coat, etch, clean",
+   body:"Japan's Tokyo Electron makes much of the coating, etching, and cleaning equipment that sits alongside ASML's scanners on every advanced fab line.",
+   facts:[["Location","Japan"],["Role","Track, etch, clean tools"],["Rank","Top-tier equipment maker"]]}
+ ]},
+ {n:"04",title:"Design",nodes:[
+  {name:"NVIDIA \u00B7 AMD \u00B7 Apple",where:"USA (fabless)",tag:"",tagl:"",role:"Design chips, own no fab",
+   body:"The famous names design the chip but build none of it \u2014 the \u201Cfabless\u201D model. They send blueprints to a foundry and compete on architecture, software, and access to fab capacity.",
+   facts:[["Model","Fabless \u2014 design only"],["Build via","TSMC & others"],["Compete on","Architecture + capacity"]]},
+  {name:"Arm",where:"United Kingdom",tag:"key",tagl:"IP",role:"The instruction set beneath",
+   body:"A British firm licenses the instruction-set architecture inside most of the world's mobile and, increasingly, data-center chips. It designs no silicon of its own \u2014 it sells the blueprint everyone builds on.",
+   facts:[["Product","CPU instruction set / IP"],["Reach","Most phones; growing in DCs"],["Location","Cambridge, UK"]]},
+  {name:"Synopsys / Cadence",where:"United States",tag:"dom",tagl:"EDA duopoly",role:"Software that designs chips",
+   body:"You can't hand-draw a chip with tens of billions of transistors. Two US firms make the electronic-design-automation software that lays them out and verifies them \u2014 a near-duopoly at the top of the chain.",
+   facts:[["Category","EDA software"],["Structure","Near-duopoly"],["Location","United States"]]}
+ ]},
+ {n:"05",title:"Fabrication",nodes:[
+  {name:"TSMC",where:"Taiwan",tag:"choke",tagl:"~90% leading edge",role:"Turns designs into silicon",
+   body:"Taiwan Semiconductor makes the overwhelming majority of the world's most advanced chips \u2014 on the order of 90% of leading-edge production \u2014 for customers who design but don't build. Nearly every frontier AI GPU is fabricated here, on one island.",
+   facts:[["Foundry share","~73% overall \u00B7 ~90% leading-edge"],["Location","Taiwan"],["Customers","NVIDIA \u00B7 Apple \u00B7 AMD"]]},
+  {name:"Samsung \u00B7 Intel",where:"Korea \u00B7 USA",tag:"",tagl:"",role:"The only other advanced fabs",
+   body:"Only two other companies can even attempt leading-edge logic at scale. Both are spending tens of billions to try to close the gap with TSMC, and both are early customers for ASML's High-NA machines.",
+   facts:[["Samsung","Korea \u2014 logic + memory"],["Intel","USA \u2014 foundry push"],["High-NA","First adopters"]]}
+ ]},
+ {n:"06",title:"Packaging",nodes:[
+  {name:"TSMC CoWoS",where:"Taiwan",tag:"choke",tagl:"AI bottleneck",role:"Fuses GPU + memory",
+   body:"A GPU is only useful bolted to its memory. TSMC's CoWoS advanced packaging fuses the logic die and stacks of high-bandwidth memory onto one interposer \u2014 and for the past couple of years it, not the chips, has been the true bottleneck on AI supply.",
+   facts:[["Role","Advanced 2.5D packaging"],["Bottleneck","Limited CoWoS capacity"],["Location","Taiwan"]]},
+  {name:"HBM memory",where:"SK hynix \u00B7 Samsung \u00B7 Micron",tag:"dom",tagl:"3-way oligopoly",role:"Stacked memory beside the GPU",
+   body:"High-bandwidth memory is DRAM stacked millimeters from the GPU, feeding it data fast enough to keep the compute busy. Just three firms make it \u2014 SK hynix (the leader), Samsung, and Micron.",
+   facts:[["Makers","SK hynix \u00B7 Samsung \u00B7 Micron"],["Form","Stacked DRAM (HBM)"],["Why","Feeds the GPU fast enough"]]}
+ ]},
+ {n:"07",title:"The product",nodes:[
+  {name:"AI accelerator",where:"\u2192 the data-center rack",tag:"",tagl:"",role:"The GPU that started as sand",
+   body:"At the end of the line: a package that began as quartz and refined sand, passed through a dozen countries and a handful of irreplaceable suppliers, and now draws its own rung on the power ladder \u2014 tens of thousands of them wired into a single machine.",
+   facts:[["Began as","Quartz + refined sand"],["Touched","~12 countries"],["Ends as","A 130 kW AI rack"]],link:"power"}
+ ]}
+];
+let siSel=[2,0]; // stage, node -> ASML
+function renderSilicon(){
+  $("#siFlow").innerHTML=SI_STAGES.map((st,si)=>`<div class="si-stage">
+    <div class="si-stage-head"><span class="sn">${st.n}</span><h4>${esc(st.title)}</h4></div>
+    <div class="si-nodes">${st.nodes.map((nd,ni)=>`<button class="si-node ${si===siSel[0]&&ni===siSel[1]?"active":""}" data-si="${si}" data-ni="${ni}">
+      <strong>${esc(nd.name)}</strong><span>${esc(nd.role)}</span>${nd.tagl?`<span class="si-tag ${nd.tag}">${esc(nd.tagl)}</span>`:""}
+    </button>`).join("")}</div>
+  </div>`).join("");
+  $$("[data-si]").forEach(b=>b.onclick=()=>{siSel=[+b.dataset.si,+b.dataset.ni];$$(".si-node").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderSiInspector();});
+  renderSiInspector();
+  renderSiFeatures();
+  renderSiChokes();
+}
+function renderSiInspector(){
+  const nd=SI_STAGES[siSel[0]].nodes[siSel[1]];
+  const link=nd.link?`<button class="action" style="margin-top:14px" id="siToPower">See it on the power ladder \u2192</button>`:"";
+  $("#siInspector").innerHTML=`<div>
+      <div class="sii-kicker">Stage ${SI_STAGES[siSel[0]].n} \u00B7 ${esc(SI_STAGES[siSel[0]].title)}</div>
+      <h3>${esc(nd.name)}</h3>
+      <div class="sii-where">${esc(nd.where)}</div>
+      <p class="sii-body">${nd.body}</p>${link}
+    </div>
+    <div class="si-facts">${nd.facts.map(f=>`<div class="sf"><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join("")}</div>`;
+  if($("#siToPower"))$("#siToPower").onclick=()=>{showView("power");};
+}
+function renderSiFeatures(){
+  $("#euvFeature").innerHTML=`<div class="sf-kicker">The machine at the center</div>
+    <h3>EUV, explained</h3>
+    <svg id="euvDiagram" viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg" aria-label="EUV light path">
+      <rect x="14" y="80" width="70" height="30" rx="6" fill="none" stroke="var(--line2)"/>
+      <text class="euv-part" x="49" y="99" text-anchor="middle">CO\u2082 laser</text>
+      <line x1="84" y1="95" x2="150" y2="95" stroke="var(--orange)" stroke-width="2"/>
+      <polygon points="150,95 142,91 142,99" fill="var(--orange)"/>
+      <circle cx="168" cy="95" r="4" fill="var(--quiet)"/><circle cx="168" cy="78" r="3" fill="var(--quiet)"/><circle cx="168" cy="112" r="3" fill="var(--quiet)"/>
+      <text class="euv-lbl" x="168" y="130" text-anchor="middle">tin droplets</text>
+      <g stroke="var(--blue)" stroke-width="1.5"><line x1="182" y1="95" x2="200" y2="80"/><line x1="182" y1="95" x2="204" y2="95"/><line x1="182" y1="95" x2="200" y2="110"/><line x1="185" y1="86" x2="199" y2="88"/><line x1="185" y1="104" x2="199" y2="102"/></g>
+      <text class="euv-part" x="196" y="150" text-anchor="middle">plasma \u2192 13.5nm</text>
+      <path d="M250 60 Q280 95 250 130" fill="none" stroke="var(--line2)" stroke-width="2.5"/>
+      <text class="euv-lbl" x="262" y="150" text-anchor="middle">collector</text>
+      <line x1="252" y1="88" x2="330" y2="70" stroke="var(--blue)" stroke-width="1.5"/>
+      <rect x="332" y="52" width="60" height="14" rx="3" fill="none" stroke="var(--line2)"/>
+      <text class="euv-part" x="362" y="46" text-anchor="middle">mask</text>
+      <line x1="360" y1="66" x2="430" y2="120" stroke="var(--blue)" stroke-width="1.5"/>
+      <rect x="404" y="120" width="90" height="16" rx="3" fill="var(--paper)" stroke="var(--line2)"/>
+      <text class="euv-part" x="449" y="153" text-anchor="middle">wafer</text>
+    </svg>
+    <p>To print features a few atoms wide, you need light with a tiny wavelength: <b>13.5-nanometer extreme ultraviolet</b>. Nothing in nature emits it cleanly, so ASML manufactures it. A stream of molten tin droplets falls through a vacuum; a laser hits each one twice \u2014 a gentle pulse to flatten it, then a violent one to vaporize it into a plasma that flashes EUV light \u2014 about <b>50,000 times a second</b>.</p>
+    <p>Because EUV is absorbed by air, glass, and nearly everything else, the light can't pass through lenses. It reflects off a series of Zeiss mirrors \u2014 the flattest objects humans have ever made \u2014 onto the patterned mask and down onto the wafer.</p>
+    <p>ASML spent three decades and over <b>$10 billion</b> getting this to work, and remains the only company that can. That's why a single Dutch firm sits at the strategic center of the entire computer industry.</p>`;
+  $("#spruceFeature").innerHTML=`<div class="sf-kicker">The town no one can replace</div>
+    <h3>Spruce Pine</h3>
+    <p>There's a myth that all the world's chips are made from sand dug out of one town in North Carolina. The truth is more specific \u2014 and stranger. Spruce Pine's quartz is the purest on Earth, and it's melted into the <b>fused-quartz crucibles</b> that cradle molten silicon while each wafer crystal is grown. Any impurity there would ruin the crystal, so the crucible has to be almost perfect.</p>
+    <p>Two companies mine it, and there is <b>no proven substitute</b> at the scale the industry needs. In September 2024, Hurricane Helene flooded the town and briefly halted mining \u2014 and every fab in the world took notice.</p>
+    <p>It's the perfect emblem of this whole map: a global, trillion-dollar industry resting, at one hidden point, on a single Appalachian hillside.</p>`;
+}
+const SI_CHOKES=[
+ ["ASML","EUV lithography","One Dutch company makes every machine capable of printing advanced chips. No second supplier exists."],
+ ["TSMC","Leading-edge fabrication","Around 90% of the world's most advanced chips are made on one island claimed by a neighbor."],
+ ["Spruce Pine","Ultra-pure quartz","The crucibles that grow silicon crystals depend on quartz from essentially one place on Earth."],
+ ["CoWoS","Advanced packaging","TSMC's packaging that fuses GPU and memory has been the real limit on AI-chip supply."],
+ ["HBM","Stacked memory","Just three firms make the high-bandwidth memory every AI accelerator needs."],
+ ["Taiwan","Geographic concentration","So much of the chain runs through one seismically active, geopolitically contested island."]
+];
+function renderSiChokes(){
+  $("#siChokes").innerHTML=SI_CHOKES.map((c,i)=>`<div class="cs-item"><span class="cs-n">SPOF 0${i+1}</span><strong>${esc(c[0])} \u00B7 ${esc(c[1])}</strong><p>${esc(c[2])}</p></div>`).join("");
+}
+
+/* ---------- Initialize new views ---------- */
+renderPower();renderSilicon();
+
 </script>
 </body>
 </html>
