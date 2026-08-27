@@ -1,31 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="An interactive atlas of artificial intelligence: concepts, history, people, systems, geography, and debates.">
-<title>An Atlas of Artificial Intelligence — Peter Nelson</title>
+<meta name="theme-color" content="#f7f7f5" id="themeColorMeta">
+<title>An Atlas of Artificial Intelligence v1.0 &mdash; Peter Nelson</title>
+<meta property="og:title" content="An Atlas of Artificial Intelligence v1.0">
+<meta property="og:description" content="An interactive atlas of artificial intelligence: concepts, history, people, systems, geography, and debates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap');
-
+/* ============================================================
+   TOKENS - the ONLY place literal colors may appear.
+   Everything below this block uses var(--...). No exceptions.
+   The globe and gradient canvases read these through cssVar() rather
+   than branching on the theme class, so a repaint picks up whichever
+   theme is live.
+   ============================================================ */
 :root{
+  color-scheme:light;
   --bg:#f7f7f5;--paper:#fff;--paper2:#f1f1ee;--ink:#171719;--muted:#68686d;--quiet:#949499;
   --line:rgba(20,20,24,.11);--line2:rgba(20,20,24,.18);--blue:#1769e0;--blue-soft:#e9f1ff;
   --green:#0e7b61;--orange:#a85a00;--violet:#6941c6;--red:#b42318;
   --shadow:0 24px 70px rgba(30,30,36,.10);--r:18px;--r2:26px;
+  --on-accent:#ffffff;
+  --shadow-input:0 12px 36px rgba(20,20,30,.05);
+  --shadow-action:0 7px 16px rgba(20,20,30,.08);
+  --shadow-card:0 8px 22px rgba(20,20,30,.05);
+  --panel-hi:0 1px 0 rgba(255,255,255,.30);
+  --scrim:rgba(0,0,0,.55);
+  --scrim-2:rgba(0,0,0,.52);
+  --globe-sky-1:#eef5ff;  --globe-sky-2:#f7f8f8;
+  --globe-land:rgba(20,32,48,.08);
+  --globe-pin:#ffffff;
+  --strip-bg:#171719;  --strip-ink:#ffffff;
+  --strip-btn:rgba(255,255,255,.10); --strip-btn-hover:rgba(255,255,255,.20);
+  --strip-line:rgba(255,255,255,.20);
+  --acc-blue:#1769e0; --acc-indigo:#6b5dd3; --acc-magenta:#ad4c83; --acc-orange:#a85a00; --acc-emerald:#0e7b61; --acc-cyan:#007b8a; --acc-red:#b42318; --acc-olive:#5b6f12; --acc-taupe:#6b5b53; --acc-violet:#6941c6; --acc-steel:#3f6e8c; --acc-brown:#7a6257; --acc-amber:#995800; --acc-green:#267247; --acc-slate:#4569aa; --acc-purple:#7b4f9d; --acc-gold:#856404; --acc-teal:#2f7478; --acc-grey:#58626d; --acc-peri:#4d6eab;
 }
-body.dark{
+html[data-theme="dark"]{
+  color-scheme:dark;
   --bg:#09090b;--paper:#151517;--paper2:#202024;--ink:#f4f4f2;--muted:#b1b1b7;--quiet:#7d7d84;
   --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.19);--blue:#6ca6ff;--blue-soft:#14233f;
   --green:#53c5a5;--orange:#ffb45e;--violet:#b69cff;--red:#ff857a;--shadow:0 28px 80px rgba(0,0,0,.34);
+  --on-accent:#09090b;
+  --shadow-input:0 12px 36px rgba(0,0,0,.40);
+  --shadow-action:0 7px 16px rgba(0,0,0,.45);
+  --shadow-card:0 8px 22px rgba(0,0,0,.40);
+  --panel-hi:0 1px 0 rgba(255,255,255,.05);
+  --scrim:rgba(0,0,0,.70);
+  --scrim-2:rgba(0,0,0,.68);
+  --globe-sky-1:#24304b;  --globe-sky-2:#111317;
+  --globe-land:rgba(255,255,255,.075);
+  --globe-pin:#151517;
+  --strip-bg:#000000;  --strip-ink:#f4f4f2;
+  --strip-btn:rgba(255,255,255,.10); --strip-btn-hover:rgba(255,255,255,.22);
+  --strip-line:rgba(255,255,255,.22);
+  --acc-blue:#6ca6ff; --acc-indigo:#a99bff; --acc-magenta:#f090c4; --acc-orange:#ffb45e; --acc-emerald:#53c5a5; --acc-cyan:#4fc9da; --acc-red:#ff857a; --acc-olive:#b3ca55; --acc-taupe:#c4ab9f; --acc-violet:#b69cff; --acc-steel:#7fb6d8; --acc-brown:#d0ab99; --acc-amber:#f0a94a; --acc-green:#63c98a; --acc-slate:#8fb2ec; --acc-purple:#c69ce8; --acc-gold:#e0b636; --acc-teal:#6cc4c9; --acc-grey:#a5b0bd; --acc-peri:#93aee8;
 }
+/* ---- house contact strip ---- */
+.contact-strip{background:var(--strip-bg);color:var(--strip-ink);border-bottom:1px solid var(--strip-line);}
+.contact-strip .shell{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:7px 0;}
+.contact-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.05em;
+  color:var(--strip-ink);background:var(--strip-btn);
+  border:0;border-radius:999px;padding:5px 11px;cursor:pointer;text-decoration:none;
+  transition:background .18s ease;
+}
+.contact-link:hover{background:var(--strip-btn-hover);}
+.contact-link svg{width:13px;height:13px;fill:currentColor;}
+.vtag{
+  font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;letter-spacing:.08em;
+  color:var(--quiet);border:1px solid var(--line2);border-radius:999px;padding:2px 8px;
+  margin-left:10px;white-space:nowrap;
+}
+.verstamp{
+  font-family:"JetBrains Mono",monospace;font-size:10px;line-height:2;letter-spacing:.06em;
+  color:var(--quiet);max-width:90ch;margin:22px 0 0;
+}
+.tablewrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0;}
+.table-scroll{overflow-x:auto;}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
 button,input,select{font:inherit}
 button{color:inherit}
 a{color:inherit}
-::selection{background:var(--blue);color:white}
+::selection{background:var(--blue);color:var(--on-accent)}
 .mono{font-family:"JetBrains Mono",monospace}
 .serif{font-family:"Source Serif 4",Georgia,serif}
 .shell{max-width:1540px;margin:auto;padding:0 26px}
@@ -40,12 +105,6 @@ a{color:inherit}
 .nav-btn{border:0;background:transparent;padding:8px 10px;border-radius:9px;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap}
 .nav-btn:hover,.nav-btn.active{background:var(--paper2);color:var(--ink)}
 .top-actions{margin-left:auto;display:flex;align-items:center;gap:7px}
-.contact-actions{display:flex;align-items:center;gap:7px}
-.contact-btn{height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:11px;font-weight:650;letter-spacing:-.01em;white-space:nowrap;transition:transform .18s ease,border-color .18s ease,background .18s ease}
-.contact-btn svg{width:15px;height:15px;display:block;flex:none}
-.contact-btn:hover{border-color:var(--line2);background:var(--wash);transform:translateY(-1px)}
-.contact-btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.contact-btn.primary:hover{background:var(--blue);border-color:var(--blue)}
 .icon-btn{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:var(--paper);display:grid;place-items:center;cursor:pointer}
 .icon-btn:hover{border-color:var(--line2);transform:translateY(-1px)}
 .hero{padding:76px 0 42px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -58,17 +117,17 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .stat{padding:15px 16px;border-right:1px solid var(--line)}.stat:last-child{border:0}
 .stat strong{display:block;font:500 22px "Source Serif 4",serif}.stat span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--quiet);margin-top:2px}
 .command{margin-top:32px;max-width:780px;position:relative;z-index:3}
-.command input{width:100%;height:54px;border-radius:999px;border:1px solid var(--line2);background:var(--paper);padding:0 120px 0 48px;color:var(--ink);outline:none;box-shadow:0 12px 36px rgba(20,20,30,.05)}
+.command input{width:100%;height:54px;border-radius:999px;border:1px solid var(--line2);background:var(--paper);padding:0 120px 0 48px;color:var(--ink);outline:none;box-shadow:var(--shadow-input)}
 .command input:focus{border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 15%,transparent)}
 .command .search-icon{position:absolute;left:19px;top:17px;color:var(--quiet)}
-.command-kbd{position:absolute;right:13px;top:10px;border:1px solid var(--line);background:var(--paper2);border-radius:999px;padding:7px 10px;font:11px "JetBrains Mono",monospace;color:var(--quiet)}
+.command-kbd{position:absolute;right:13px;top:10px;border:1px solid var(--line);background:var(--paper2);border-radius:999px;padding:7px 10px;font:11px "JetBrains Mono",monospace;color:var(--muted)}
 .search-results{position:absolute;left:0;right:0;top:62px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:8px;max-height:420px;overflow:auto;display:none}
 .search-results.show{display:block}
 .search-result{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;border-radius:11px;cursor:pointer}
 .search-result:hover{background:var(--paper2)}
 .result-type{font:10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--blue)}
 .result-title{font-size:13px;font-weight:600}.result-desc{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.result-year{font:11px "JetBrains Mono",monospace;color:var(--quiet)}
+.result-year{font:11px "JetBrains Mono",monospace;color:var(--muted)}
 
 .view{display:none;padding:36px 0 88px}.view.active{display:block}
 .view-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:24px}
@@ -76,16 +135,16 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .view-head p{color:var(--muted);max-width:690px;margin:8px 0 0}
 .view-meta{font:11px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.09em;color:var(--quiet);white-space:nowrap}
 
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 1px 0 rgba(255,255,255,.3)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--panel-hi)}
 .panel-title{font:500 11px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--quiet);margin:0 0 12px}
 .chip-row{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:7px 10px;font-size:11px;color:var(--muted);cursor:pointer}
 .chip:hover{border-color:var(--line2);color:var(--ink)}
 .chip.active{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .action{border:1px solid var(--line2);background:var(--paper);border-radius:999px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer}
-.action:hover{transform:translateY(-1px);box-shadow:0 7px 16px rgba(20,20,30,.08)}
+.action:hover{transform:translateY(-1px);box-shadow:var(--shadow-action)}
 .action.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.action.blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.action.blue{background:var(--blue);color:var(--on-accent);border-color:var(--blue)}
 .field{width:100%;border:1px solid var(--line);border-radius:11px;background:var(--paper2);color:var(--ink);padding:10px 12px;outline:none}
 .field:focus{border-color:var(--blue)}
 
@@ -131,7 +190,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .lane-name{position:sticky;left:0;z-index:4;width:112px;height:100%;display:flex;align-items:center;padding:0 14px;background:linear-gradient(90deg,var(--paper) 82%,transparent);font:10px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--quiet)}
 .event-dot{position:absolute;top:18px;width:11px;height:11px;border-radius:50%;background:var(--blue);border:3px solid var(--paper);box-shadow:0 0 0 1px var(--blue);cursor:pointer;z-index:3}
 .event-stem{position:absolute;top:29px;height:14px;border-left:1px solid var(--line2)}
-.event-card{position:absolute;top:44px;width:188px;border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:var(--paper);cursor:pointer;box-shadow:0 8px 22px rgba(20,20,30,.05);text-align:left}
+.event-card{position:absolute;top:44px;width:188px;border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:var(--paper);cursor:pointer;box-shadow:var(--shadow-card);text-align:left}
 .event-card:hover{border-color:var(--blue);transform:translateY(-2px);z-index:4}
 .event-card .yr{font:9px "JetBrains Mono",monospace;color:var(--blue)}.event-card strong{font-size:11px;display:block;line-height:1.25;margin-top:3px}.event-card span{font-size:9px;color:var(--quiet)}
 .timeline-legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
@@ -197,7 +256,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .builder-steps{padding:12px;position:sticky;top:79px}
 .builder-step{width:100%;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;border:0;background:transparent;border-radius:11px;padding:10px;text-align:left;cursor:pointer}
 .builder-step:hover,.builder-step.active{background:var(--paper2)}
-.builder-step.done .builder-step-num{background:var(--blue);color:white;border-color:var(--blue)}
+.builder-step.done .builder-step-num{background:var(--blue);color:var(--on-accent);border-color:var(--blue)}
 .builder-step-num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);font:9px "JetBrains Mono",monospace;color:var(--quiet)}
 .builder-step strong{display:block;font-size:11px}.builder-step span{display:block;font-size:9px;color:var(--quiet);margin-top:2px;line-height:1.35}
 .builder-wizard{padding:26px;min-height:570px}
@@ -242,13 +301,13 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .term-card p{font-size:10px;color:var(--muted);margin:0}
 .term-year{position:absolute;right:12px;top:12px;font:9px "JetBrains Mono",monospace;color:var(--quiet)}
 .compare-add{position:absolute;right:10px;bottom:9px;width:25px;height:25px;border-radius:50%;border:1px solid var(--line);background:var(--paper2);cursor:pointer}
-.compare-add:hover,.compare-add.added{background:var(--blue);color:#fff;border-color:var(--blue)}
+.compare-add:hover,.compare-add.added{background:var(--blue);color:var(--on-accent);border-color:var(--blue)}
 .compare-tray{position:fixed;z-index:80;bottom:18px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--ink);color:var(--bg);border-radius:18px;padding:10px 12px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow);transition:.3s;max-width:calc(100vw - 30px)}
 .compare-tray.show{transform:translateX(-50%) translateY(0)}
 .compare-pill{border:1px solid color-mix(in srgb,var(--bg) 25%,transparent);border-radius:999px;padding:7px 10px;font-size:10px;white-space:nowrap}.compare-pill button{border:0;background:none;color:inherit;cursor:pointer;margin-left:5px}
 .compare-btn{border:0;border-radius:999px;background:var(--bg);color:var(--ink);padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer}
 .load-more{display:block;margin:24px auto 0}
-.tour-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;place-items:center;padding:20px;backdrop-filter:blur(10px)}
+.tour-overlay{position:fixed;inset:0;background:var(--scrim);z-index:200;display:none;place-items:center;padding:20px;backdrop-filter:blur(10px)}
 .tour-overlay.show{display:grid}
 .tour-card{width:min(840px,100%);background:var(--paper);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden}
 .tour-top{padding:24px 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px}.tour-top h2{font:500 34px/1 "Source Serif 4",serif;margin:0}.tour-top p{font-size:12px;color:var(--muted);margin:8px 0 0}
@@ -256,7 +315,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 .tour-body{padding:42px 50px;min-height:300px;display:grid;grid-template-columns:100px 1fr;gap:28px;align-items:start}
 .tour-year{font:500 46px "Source Serif 4",serif;color:var(--blue)}.tour-body h3{font:500 34px/1.05 "Source Serif 4",serif;margin:3px 0 15px}.tour-body p{font-size:16px;color:var(--muted)}
 .tour-bottom{padding:18px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:210;display:none;place-items:center;padding:20px;backdrop-filter:blur(10px)}
+.modal{position:fixed;inset:0;background:var(--scrim-2);z-index:210;display:none;place-items:center;padding:20px;backdrop-filter:blur(10px)}
 .modal.show{display:grid}
 .modal-card{width:min(880px,100%);max-height:88vh;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:28px;position:relative}
 .modal-close{position:absolute;right:18px;top:18px}
@@ -278,7 +337,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
   .glossary-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:880px){
-  .shell{padding:0 15px}.top-inner{height:auto;min-height:58px;flex-wrap:wrap;padding:9px 0}.main-nav{order:3;width:100%}.top-actions{margin-left:auto}.contact-btn{padding:0 10px}.contact-btn span{display:none}
+  .shell{padding:0 15px}.top-inner{height:auto;min-height:58px;flex-wrap:wrap;padding:9px 0}.main-nav{order:3;width:100%}.top-actions{margin-left:auto}
   .hero{padding:52px 0 34px}.hero-copy{grid-template-columns:1fr}.statbar{grid-template-columns:repeat(2,1fr)}
   .atlas-grid{grid-template-columns:1fr}.atlas-side{max-height:none}.graph-panel,#conceptGraph{height:600px}
   .timeline-controls{grid-template-columns:1fr}.timeline-list{grid-template-columns:repeat(2,1fr)}
@@ -403,34 +462,22 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
 </head>
 <body>
 
+<div class="contact-strip">
+  <div class="shell">
+    <a class="contact-link" href="mailto:ponelson@gmail.com">Email</a>
+    <a class="contact-link" href="https://www.linkedin.com/in/ponelson/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="contact-link" href="https://ponelson.github.io/pon/" target="_blank" rel="noopener">GitHub</a>
+    <button class="contact-link" id="themeToggle" aria-pressed="false"><span id="themeLabel">Dark</span></button>
+  </div>
+</div>
+
 <header class="topbar">
   <div class="shell top-inner">
-    <div class="brand"><span class="brand-mark"></span><span>Atlas of AI</span></div>
-    <nav class="main-nav" aria-label="Primary">
-      <button class="nav-btn active" data-view="explore">Explore</button>
-      <button class="nav-btn" data-view="timeline">Timeline</button>
-      <button class="nav-btn" data-view="globe">Globe</button>
-      <button class="nav-btn" data-view="people">People</button>
-      <button class="nav-btn" data-view="systems">Systems</button>
-      <button class="nav-btn" data-view="power">Power</button>
-      <button class="nav-btn" data-view="silicon">Silicon</button>
-      <button class="nav-btn" data-view="builder">Build a Model</button>
-      <button class="nav-btn" data-view="debates">Debates</button>
-      <button class="nav-btn" data-view="glossary">Glossary</button>
+    <div class="brand"><span class="brand-mark"></span><span>Atlas of AI</span><span class="vtag">v1.0</span></div>
+    <nav class="main-nav" id="mainNav" aria-label="Primary">
     </nav>
     <div class="top-actions">
-      <div class="contact-actions" aria-label="Contact Peter Nelson">
-        <a class="contact-btn primary" href="mailto:ponelson@gmail.com" aria-label="Email Peter Nelson">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
-          <span>Email</span>
-        </a>
-        <a class="contact-btn" href="https://linkedin.com/in/ponelson" target="_blank" rel="noopener noreferrer" aria-label="Peter Nelson on LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
-          <span>LinkedIn</span>
-        </a>
-      </div>
       <button class="icon-btn" id="methodBtn" aria-label="Methodology">i</button>
-      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">◐</button>
     </div>
   </div>
 </header>
@@ -459,7 +506,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
   </section>
 
   <div class="shell">
-    <section class="view active" id="view-explore">
+    <section class="section view active" id="view-explore" data-nav="Explore">
       <div class="view-head">
         <div><h2>Concept atlas</h2><p>Explore AI as a connected system. Select a node to see its intellectual neighborhood, historical origins, prerequisites, and descendants.</p></div>
         <div class="view-meta">Drag · zoom · select</div>
@@ -487,7 +534,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
-    <section class="view" id="view-timeline">
+    <section class="section view" id="view-timeline" data-nav="Timeline">
       <div class="view-head">
         <div><h2>The long timeline</h2><p>Ideas, architectures, machines, institutions, products, policy, and culture shown together. Zoom from two centuries to a single era.</p></div>
         <div class="view-meta"><span id="timelineCount">—</span> visible events</div>
@@ -517,7 +564,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       <div class="timeline-list" id="timelineList"></div>
     </section>
 
-    <section class="view" id="view-globe">
+    <section class="section view" id="view-globe" data-nav="Globe">
       <div class="view-head">
         <div><h2>Where AI was made</h2><p>Research lineages, frontier laboratories, semiconductor centers, and regulatory capitals. Rotate the globe and filter the ecosystem by function.</p></div>
         <div class="view-meta">The geography of ideas ≠ the geography of compute</div>
@@ -535,7 +582,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
-    <section class="view" id="view-people">
+    <section class="section view" id="view-people" data-nav="People">
       <div class="view-head">
         <div><h2>People and lineages</h2><p>Not a celebrity gallery: an intellectual genealogy of the people who created the field’s major schools, methods, systems, and institutions.</p></div>
         <div class="view-meta"><span id="peopleCount">—</span> profiles</div>
@@ -550,7 +597,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
-    <section class="view" id="view-systems">
+    <section class="section view" id="view-systems" data-nav="Systems">
       <div class="view-head">
         <div><h2>How the systems work</h2><p>Trace a model from data to deployment, follow a RAG answer to its sources, or step through the controlled loop that turns a language model into an agent.</p></div>
         <div class="view-meta">Click each stage</div>
@@ -600,46 +647,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
-    <section class="view" id="view-builder">
-      <div class="view-head">
-        <div><h2>Build your own model</h2><p>A choose-your-own-adventure design studio. Define the job, data sensitivity, quality target, deployment model, customization level, and scale; the atlas turns those choices into a practical architecture and current off-the-shelf shortlist.</p></div>
-        <div class="view-meta">Design first · models second</div>
-      </div>
-      <div class="builder-layout">
-        <aside class="panel builder-steps" id="builderSteps"></aside>
-        <div class="panel builder-wizard" id="builderWizard"></div>
-        <aside class="panel builder-blueprint" id="builderBlueprint"></aside>
-      </div>
-      <div class="panel builder-architecture" id="builderArchitecture"></div>
-      <div class="builder-plan" id="builderPlan"></div>
-      <p class="builder-note">Model catalogs change quickly. Recommendations are a decision framework, not a procurement guarantee. The option set is tied to official provider documentation and was reviewed July 16, 2026.</p>
-    </section>
-
-    <section class="view" id="view-debates">
-      <div class="view-head">
-        <div><h2>The field is not settled</h2><p>Each debate is presented as competing strong arguments rather than a caricature. Expand a card to inspect the unresolved question.</p></div>
-        <div class="view-meta">Steelman both sides</div>
-      </div>
-      <div class="debate-map" id="debateMap"></div>
-    </section>
-
-    <section class="view" id="view-glossary">
-      <div class="view-head">
-        <div><h2>The reference layer</h2><p>The exhaustive glossary underneath the atlas. Search across definitions, dates, and categories; add up to three concepts to the comparison tray.</p></div>
-        <div class="view-meta">383 concepts · 9 domains</div>
-      </div>
-      <div class="glossary-toolbar">
-        <div>
-          <input class="field" id="termSearch" placeholder="Search the complete glossary…">
-          <div class="chip-row" id="termFilters" style="margin-top:10px"></div>
-        </div>
-        <div class="glossary-stats" id="glossaryStats"></div>
-      </div>
-      <div class="glossary-grid" id="glossaryGrid"></div>
-      <button class="action load-more" id="loadMore">Show more</button>
-    </section>
-
-    <section class="view" id="view-power">
+    <section class="section view" id="view-power" data-nav="Power">
       <div class="view-head">
         <div><h2>The power ladder</h2><p>From a single AI answer to the entire planet's electricity, on one logarithmic axis. Each rung draws very roughly ten to a thousand times the one beneath it. Select any rung for the number — and the source — behind it.</p></div>
         <div class="view-meta">Average continuous power · log scale</div>
@@ -658,7 +666,7 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
       </div>
     </section>
 
-    <section class="view" id="view-silicon">
+    <section class="section view" id="view-silicon" data-nav="Silicon">
       <div class="view-head">
         <div><h2>How a chip is made</h2><p>Every AI accelerator is the output of the most concentrated supply chain on Earth — from the world's purest quartz to a machine that fires lasers at falling tin. Follow it left to right; click any link for what it does and why it can't easily be replaced.</p></div>
         <div class="view-meta">Raw rock → reasoning engine</div>
@@ -675,6 +683,46 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
         <div class="cs-grid" id="siChokes"></div>
       </div>
     </section>
+    <section class="section view" id="view-builder" data-nav="Build a Model">
+      <div class="view-head">
+        <div><h2>Build your own model</h2><p>A choose-your-own-adventure design studio. Define the job, data sensitivity, quality target, deployment model, customization level, and scale; the atlas turns those choices into a practical architecture and current off-the-shelf shortlist.</p></div>
+        <div class="view-meta">Design first · models second</div>
+      </div>
+      <div class="builder-layout">
+        <aside class="panel builder-steps" id="builderSteps"></aside>
+        <div class="panel builder-wizard" id="builderWizard"></div>
+        <aside class="panel builder-blueprint" id="builderBlueprint"></aside>
+      </div>
+      <div class="panel builder-architecture" id="builderArchitecture"></div>
+      <div class="builder-plan" id="builderPlan"></div>
+      <p class="builder-note">Model catalogs change quickly. Recommendations are a decision framework, not a procurement guarantee. The option set is tied to official provider documentation and was reviewed July 16, 2026.</p>
+    </section>
+
+    <section class="section view" id="view-debates" data-nav="Debates">
+      <div class="view-head">
+        <div><h2>The field is not settled</h2><p>Each debate is presented as competing strong arguments rather than a caricature. Expand a card to inspect the unresolved question.</p></div>
+        <div class="view-meta">Steelman both sides</div>
+      </div>
+      <div class="debate-map" id="debateMap"></div>
+    </section>
+
+    <section class="section view" id="view-glossary" data-nav="Glossary">
+      <div class="view-head">
+        <div><h2>The reference layer</h2><p>The exhaustive glossary underneath the atlas. Search across definitions, dates, and categories; add up to three concepts to the comparison tray.</p></div>
+        <div class="view-meta">383 concepts · 9 domains</div>
+      </div>
+      <div class="glossary-toolbar">
+        <div>
+          <input class="field" id="termSearch" placeholder="Search the complete glossary…">
+          <div class="chip-row" id="termFilters" style="margin-top:10px"></div>
+        </div>
+        <div class="glossary-stats" id="glossaryStats"></div>
+      </div>
+      <div class="glossary-grid" id="glossaryGrid"></div>
+      <button class="action load-more" id="loadMore">Show more</button>
+    </section>
+
+
   </div>
 </main>
 
@@ -697,6 +745,10 @@ h1{font:500 clamp(48px,7vw,92px)/.95 "Source Serif 4",Georgia,serif;letter-spaci
     <div><strong>Atlas of Artificial Intelligence</strong><br>An editorial, educational map of the field through July 2026.</div>
     <div style="text-align:right">Designed as a connected reference, not a prediction engine.<br><a href="mailto:ponelson@gmail.com">Email</a> · <a href="https://linkedin.com/in/ponelson" target="_blank" rel="noopener">LinkedIn</a></div>
   </div>
+  <p class="verstamp">
+    An Atlas of Artificial Intelligence &mdash; v1.0 · build 2026-08-26T03:20-04:00 · supersedes the previous unversioned build (theme keyed to a body class, canvas colours branched on that class in JavaScript, no version stamp anywhere).<br>
+    Changes in v1.0: theme moved onto the house [data-theme] mechanism with a persisted toggle in a contact strip; globe and gradient canvas colours moved out of JavaScript branches and into tokens read via cssVar(); the primary nav now builds itself from the view sections, and the sections are ordered to match it; comparison tables wrapped for mobile; version carried in the title, brand tag and footer. Concepts, events, people, places and debates are unchanged.
+  </p>
 </footer>
 
 <script>
@@ -707,18 +759,21 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;"
 const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 const byName = new Map(DATA.terms.map(x=>[x.name,x]));
 const categoryColors = {
-  "Foundations":"#1769e0","Learning mechanics":"#6b5dd3","Architectures":"#ad4c83",
-  "Data & training":"#a85a00","Inference & systems":"#0e7b61","Agents & retrieval":"#007b8a",
-  "Safety & evaluation":"#b42318","Perception, robotics & science":"#5b6f12","Economics & society":"#6b5b53"
+  "Foundations":"--acc-blue","Learning mechanics":"--acc-indigo","Architectures":"--acc-magenta",
+  "Data & training":"--acc-orange","Inference & systems":"--acc-emerald","Agents & retrieval":"--acc-cyan",
+  "Safety & evaluation":"--acc-red","Perception, robotics & science":"--acc-olive","Economics & society":"--acc-taupe"
 };
-const placeColors = {Research:"#1769e0",Industry:"#a85a00",Hardware:"#b42318",Policy:"#6941c6"};
+const placeColors = {Research:"--acc-blue",Industry:"--acc-orange",Hardware:"--acc-red",Policy:"--acc-violet"};
 const laneColors = {
-  Ideas:"#1769e0",Architectures:"#ad4c83",Systems:"#0e7b61",Hardware:"#b42318",Data:"#a85a00",
-  Products:"#6941c6",Institutions:"#3f6e8c",Policy:"#6b5dd3",Economy:"#7a6257",Robotics:"#5b6f12",
-  Training:"#995800",Tools:"#007b8a",Science:"#267247",Retrieval:"#4569aa","Open models":"#7b4f9d",
-  Safety:"#b42318",Reasoning:"#856404","World models":"#2f7478",Measurement:"#58626d",Perception:"#4d6eab",
-  Agents:"#0e7b61"
+  Ideas:"--acc-blue",Architectures:"--acc-magenta",Systems:"--acc-emerald",Hardware:"--acc-red",Data:"--acc-orange",
+  Products:"--acc-violet",Institutions:"--acc-steel",Policy:"--acc-indigo",Economy:"--acc-brown",Robotics:"--acc-olive",
+  Training:"--acc-amber",Tools:"--acc-cyan",Science:"--acc-green",Retrieval:"--acc-slate","Open models":"--acc-purple",
+  Safety:"--acc-red",Reasoning:"--acc-gold","World models":"--acc-teal",Measurement:"--acc-grey",Perception:"--acc-peri",
+  Agents:"--acc-emerald"
 };
+/* Resolve a palette slot against whichever theme is live. Falls back to the
+   blue slot for a lane or category the palette does not name. */
+function slot(tokenName){return cssVar(tokenName||"--acc-blue")||cssVar("--acc-blue")}
 let state = {
   view:"explore", concept:"Transformer", category:"All", graphScale:1, graphX:0, graphY:0, graphBurst:null,
   timelineStart:2012,timelineEnd:2026,timelineZoom:2,activeLanes:new Set(),
@@ -740,9 +795,51 @@ function showView(name, scroll=true){
   if(name==="systems") setTimeout(drawGradient,60);
   if(name==="builder") setTimeout(renderModelBuilder,20);
 }
+/* ---- primary nav builds itself from the view sections ---- */
+(function(){
+  var nav=$("#mainNav");
+  if(!nav) return;
+  $$("section.view[data-nav]").forEach(function(sec){
+    var b=document.createElement("button");
+    b.className="nav-btn"+(sec.classList.contains("active")?" active":"");
+    b.dataset.view=sec.id.replace("view-","");
+    b.textContent=sec.dataset.nav;
+    nav.appendChild(b);
+  });
+})();
 $$(".nav-btn").forEach(b=>b.onclick=()=>showView(b.dataset.view));
-$("#themeBtn").onclick=()=>{document.body.classList.toggle("dark");try{localStorage.setItem("atlasTheme",document.body.classList.contains("dark")?"dark":"light")}catch(e){}drawGlobe();drawGradient();};
-try{if(localStorage.getItem("atlasTheme")==="dark") document.body.classList.add("dark")}catch(e){}
+
+/* ---- theme ---- */
+(function(){
+  var root=document.documentElement,
+      btn=$("#themeToggle"), lbl=$("#themeLabel"), meta=$("#themeColorMeta");
+  function read(){ try{return localStorage.getItem("atlasTheme");}catch(e){return null;} }
+  function write(v){ try{localStorage.setItem("atlasTheme",v);}catch(e){} }
+  function apply(t){
+    root.setAttribute("data-theme",t);
+    if(lbl) lbl.textContent = (t==="dark"?"Light":"Dark");
+    if(btn) btn.setAttribute("aria-pressed", t==="dark"?"true":"false");
+    if(meta){ try{ meta.setAttribute("content", cssVar("--bg")); }catch(e){} }
+    try{ drawGlobe(); }catch(e){}
+    try{ drawGradient(); }catch(e){}
+    try{ renderTimeline(); }catch(e){}
+    try{ renderGraph(); }catch(e){}
+  }
+  var saved=read(), initial="light";
+  try{
+    initial = saved || (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark":"light");
+  }catch(e){ initial = saved || "light"; }
+  apply(initial);
+  if(btn) btn.onclick=function(){
+    var next = root.getAttribute("data-theme")==="dark" ? "light":"dark";
+    apply(next); write(next);
+  };
+  try{
+    if(window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(e){
+      if(!read()) apply(e.matches?"dark":"light");
+    });
+  }catch(e){}
+})();
 document.addEventListener("keydown",e=>{
   if(e.key==="/" && !["INPUT","TEXTAREA"].includes(document.activeElement.tagName)){e.preventDefault();$("#globalSearch").focus();}
   if(e.key==="Escape"){closeModal();closeTour();$("#searchResults").classList.remove("show");}
@@ -913,7 +1010,7 @@ function renderGraph(){
   svg.innerHTML=`<g id="graphWorld" transform="translate(${state.graphX} ${state.graphY}) scale(${state.graphScale})">
     <g>${edgeSet.map(e=>{const a=nodeMap.get(e.a),b=nodeMap.get(e.b);return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="var(--line2)" stroke-width="${e.faint?.7:1.25}" opacity="${e.faint?.35:.8}"/>`}).join("")}</g>
     <g>${positioned.map(n=>{
-      const c=categoryColors[n.category]||"#1769e0",sel=n.name===selected.name,cluster=clusterByNode.get(n.name),crowded=cluster&&cluster.length>1&&!state.graphBurst;
+      const c=slot(categoryColors[n.category]),sel=n.name===selected.name,cluster=clusterByNode.get(n.name),crowded=cluster&&cluster.length>1&&!state.graphBurst;
       return `<g class="graph-node ${crowded?"crowded":""}" data-name="${esc(n.name)}" transform="translate(${n.x} ${n.y})" style="cursor:pointer" role="button" tabindex="0" aria-label="Open ${esc(n.name)}">
         <circle r="${n.r+5}" fill="${sel?"color-mix(in srgb, "+c+" 16%, var(--paper))":"var(--paper)"}" stroke="${c}" stroke-width="${sel?2.5:1.2}"/>
         <circle r="${sel?8:4}" fill="${c}"/>
@@ -1002,7 +1099,7 @@ function renderTimeline(){
     return `<div class="lane-row"><div class="lane-name">${esc(l)}</div>${evs.map((e,i)=>{
       const x=120+(e.year-start)/span*contentW;
       const offset=(i%2)*5;
-      return `<button class="event-dot" style="left:${x}px;background:${laneColors[l]||"#1769e0"};box-shadow:0 0 0 1px ${laneColors[l]||"#1769e0"}" data-event="${esc(e.title)}" title="${esc(e.title)}"></button>
+      return `<button class="event-dot" style="left:${x}px;background:${slot(laneColors[l])};box-shadow:0 0 0 1px ${slot(laneColors[l])}" data-event="${esc(e.title)}" title="${esc(e.title)}"></button>
       <span class="event-stem" style="left:${x+5}px"></span>
       <button class="event-card" style="left:${Math.min(width-196,Math.max(8,x-5))}px;top:${44+offset}px" data-event="${esc(e.title)}"><span class="yr">${e.year}</span><strong>${esc(e.title)}</strong><span>${esc(e.place)}</span></button>`;
     }).join("")}</div>`;
@@ -1030,7 +1127,7 @@ window.eventModal=eventModal;window.showView=showView;
 $(".timeline-era[data-start='2012']").classList.add("active");
 $$(".timeline-era").forEach(b=>b.onclick=()=>{$$(".timeline-era").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.timelineStart=Number(b.dataset.start);state.timelineEnd=Number(b.dataset.end);renderTimeline()});
 $("#timelineZoom").oninput=e=>{state.timelineZoom=Number(e.target.value);renderTimeline()};
-$("#timelineLegend").innerHTML=allLanes.map(l=>`<span class="legend-dot"><i style="background:${laneColors[l]||"#1769e0"}"></i>${esc(l)}</span>`).join("");
+$("#timelineLegend").innerHTML=allLanes.map(l=>`<span class="legend-dot"><i style="background:${slot(laneColors[l])}"></i>${esc(l)}</span>`).join("");
 
 /* ---------- Globe ---------- */
 const LAND = [
@@ -1060,7 +1157,7 @@ function drawGlobe(){
   ctx.clearRect(0,0,w,h);
   const p0=project(0,state.globeLon,w,h);
   const grad=ctx.createRadialGradient(p0.cx-p0.R*.35,p0.cy-p0.R*.4,p0.R*.05,p0.cx,p0.cy,p0.R);
-  grad.addColorStop(0,document.body.classList.contains("dark")?"#24304b":"#eef5ff");grad.addColorStop(1,document.body.classList.contains("dark")?"#111317":"#f7f8f8");
+  grad.addColorStop(0,cssVar("--globe-sky-1"));grad.addColorStop(1,cssVar("--globe-sky-2"));
   ctx.beginPath();ctx.arc(p0.cx,p0.cy,p0.R,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();ctx.strokeStyle=cssVar("--line2");ctx.lineWidth=1.2;ctx.stroke();
   ctx.save();ctx.beginPath();ctx.arc(p0.cx,p0.cy,p0.R,0,Math.PI*2);ctx.clip();
   // graticule
@@ -1068,15 +1165,15 @@ function drawGlobe(){
   for(let lat=-60;lat<=60;lat+=30){ctx.beginPath();let started=false;for(let lon=-180;lon<=180;lon+=3){const p=project(lat,lon,w,h);if(p.visible){if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y)}else started=false}ctx.stroke()}
   for(let lon=-150;lon<=180;lon+=30){ctx.beginPath();let started=false;for(let lat=-89;lat<=89;lat+=3){const p=project(lat,lon,w,h);if(p.visible){if(!started){ctx.moveTo(p.x,p.y);started=true}else ctx.lineTo(p.x,p.y)}else started=false}ctx.stroke()}
   // land
-  LAND.forEach(poly=>{ctx.beginPath();let started=false;poly.forEach(([lat,lon])=>{const p=project(lat,lon,w,h);if(p.visible){started?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);started=true}});ctx.closePath();ctx.fillStyle=document.body.classList.contains("dark")?"rgba(255,255,255,.075)":"rgba(20,32,48,.08)";ctx.fill();ctx.strokeStyle=cssVar("--line2");ctx.stroke()});
+  LAND.forEach(poly=>{ctx.beginPath();let started=false;poly.forEach(([lat,lon])=>{const p=project(lat,lon,w,h);if(p.visible){started?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y);started=true}});ctx.closePath();ctx.fillStyle=cssVar("--globe-land");ctx.fill();ctx.strokeStyle=cssVar("--line2");ctx.stroke()});
   ctx.restore();
   globePoints=[];
   DATA.places.filter(p=>state.globeKind==="All"||p.kind===state.globeKind).forEach(p=>{
     const q=project(p.lat,p.lon,w,h);if(!q.visible)return;
     const selected=p.name===state.selectedPlace,r=selected?7:4;
-    ctx.beginPath();ctx.arc(q.x,q.y,r+3,0,Math.PI*2);ctx.fillStyle=document.body.classList.contains("dark")?"#151517":"#fff";ctx.fill();
-    ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.fillStyle=placeColors[p.kind];ctx.fill();
-    if(selected){ctx.strokeStyle=placeColors[p.kind];ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,12,0,Math.PI*2);ctx.stroke()}
+    ctx.beginPath();ctx.arc(q.x,q.y,r+3,0,Math.PI*2);ctx.fillStyle=cssVar("--globe-pin");ctx.fill();
+    ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.fillStyle=slot(placeColors[p.kind]);ctx.fill();
+    if(selected){ctx.strokeStyle=slot(placeColors[p.kind]);ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,12,0,Math.PI*2);ctx.stroke()}
     globePoints.push({...p,x:q.x,y:q.y,r:14});
   });
 }
@@ -1084,7 +1181,7 @@ function renderGlobeFilters(){
   const kinds=["All",...Object.keys(placeColors)];
   $("#globeFilters").innerHTML=kinds.map(k=>`<button class="chip ${state.globeKind===k?"active":""}" data-kind="${k}">${k}</button>`).join("");
   $$(".chip[data-kind]").forEach(b=>b.onclick=()=>{state.globeKind=b.dataset.kind;renderGlobeFilters();drawGlobe();renderPlaceSide()});
-  $("#globeLegend").innerHTML=Object.entries(placeColors).map(([k,c])=>`<span class="legend-dot"><i style="background:${c}"></i>${k}</span>`).join("");
+  $("#globeLegend").innerHTML=Object.entries(placeColors).map(([k,c])=>`<span class="legend-dot"><i style="background:${slot(c)}"></i>${k}</span>`).join("");
 }
 function selectPlace(name){
   const p=DATA.places.find(x=>x.name===name);if(!p)return;state.selectedPlace=name;state.globeLon=p.lon;state.globeLat=Math.max(-35,Math.min(35,p.lat*.35));drawGlobe();renderPlaceSide();
@@ -1400,7 +1497,7 @@ function openComparison(){
     ["Closest relationships",...ts.map(t=>neighbors(t.name).slice(0,5).map(x=>x.name).join(", ")||"—")],
     ["System role",...ts.map(t=>importanceText(t))]
   ];
-  openModal(`<div class="modal-kicker">Concept comparison</div><h2>${ts.map(t=>esc(t.name)).join(" · ")}</h2><table class="compare-table"><thead><tr><th>Dimension</th>${ts.map(t=>`<th>${esc(t.name)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table>`);
+  openModal(`<div class="modal-kicker">Concept comparison</div><h2>${ts.map(t=>esc(t.name)).join(" · ")}</h2><div class="tablewrap"><div class="table-scroll"><table class="compare-table"><thead><tr><th>Dimension</th>${ts.map(t=>`<th>${esc(t.name)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((v,i)=>`<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>`);
 }
 
 /* ---------- Tours ---------- */
